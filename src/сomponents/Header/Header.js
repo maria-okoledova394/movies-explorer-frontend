@@ -6,8 +6,8 @@ function Header() {
     return (
         <div className="header__container">
             <header className="header">
-                <div className="header__logo"></div>
-                <Navigation loggedIn='false'/>
+                <div className="header__logo" alt="Логотип"></div>
+                <Navigation loggedIn={false}/>
             </header>
         </div>  
     );
