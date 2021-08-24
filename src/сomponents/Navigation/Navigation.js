@@ -10,7 +10,7 @@ function Navigation(props) {
                 <ul className="navigation navigation_loggedin">
                     <li className="navigation__movies-link"><Link className="navigation__link navigation__link_loggedin" to="/signin">Фильмы</Link></li>
                     <li className="navigation__saved-movies-link"><Link className="navigation__link navigation__link_loggedin" to="/signup">Сохраненные Фильмы</Link></li>
-                    <li className="navigation__account-link"><Link className="navigation__link navigation__link_loggedin" to="/signup">Аккаунт<img class="navigation__account-icon" alt="иконка Аккаунт" src={accountIcon}></img></Link></li>
+                    <li className="navigation__account-link"><Link className="navigation__link navigation__link_loggedin" to="/signup">Аккаунт<img className="navigation__account-icon" alt="иконка Аккаунт" src={accountIcon}></img></Link></li>
                 </ul>
             :
                 <ul className="navigation navigation_notloggedin">
