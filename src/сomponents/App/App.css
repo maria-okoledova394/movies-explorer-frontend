@@ -4,9 +4,8 @@
 .page {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  background-color: #000000;
+  background-color: #202020;
   width: 100%;
   min-height: 100vh;
   font-family: 'Inter';
-  background-color: white;
 }
