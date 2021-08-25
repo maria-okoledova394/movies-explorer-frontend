@@ -15,11 +15,11 @@ function SearchForm() {
     return (
         <div className="searchform__container">
             <form className="searchform">
-                <input name="film" className="searchform__input" placeholder="Фильм" type="search" value={inputData.value} onChange={handleChange}></input>
+                <input name="film" className="searchform__input" placeholder="Фильм" value={inputData.value} onChange={handleChange}></input>
                 <button type="submit" className="searchform__button"></button>      
             </form>
-
             <FilterCheckbox />
+            <hr className="searchform__line"></hr>
         </div>
     )
   }
