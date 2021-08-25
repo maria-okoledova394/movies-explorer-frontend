@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import initialCards from '../../utils/constants';
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+    const initialCards = props.initialCards;
 
     const [cardsCount, setCardsCount] = useState({
         itemsToShow: 0,

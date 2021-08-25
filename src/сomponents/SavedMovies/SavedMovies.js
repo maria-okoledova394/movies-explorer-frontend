@@ -1,20 +1,20 @@
 import React from 'react';
-import './Movies.css';
+import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies(props) {
+function SavedMovies(props) {
 
     return (
       <section className="movies">
         <Header loggedIn={true} />
         <SearchForm />
-        <MoviesCardList initialCards={props.initialCards}/>
+        <MoviesCardList initialCards={props.initialCards} />
         <Footer />
       </section>
     )
   }
   
-  export default Movies;
+  export default SavedMovies;

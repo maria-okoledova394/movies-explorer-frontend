@@ -1,18 +1,3 @@
 .movies {
-    width: 89%;
-    max-width: 1140px;
-    margin-left: auto;
-    margin-right: auto;  
-}
-
-@media screen and (max-width: 768px) {
-    .movies {
-        width: 92%;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .movies {
-        width: 93.75%;
-    }
+    width: 100%;   
 }

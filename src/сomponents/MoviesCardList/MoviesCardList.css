@@ -8,15 +8,17 @@
     margin-top: 70px;
     margin-left: auto;
     margin-right: auto;
+    max-width: 1140px;
 }
 
 .card-list__button {
-    width: 100%;
+    width: 89%;
+    margin-right: auto;
+    margin-left: auto;
     background-color: #2F2F2F;
     font-size: 12px;
     font-weight: 500;
     text-align: center;
-    vertical-align: middle;
     height: 36px;
     border-radius: 6px;
     border: none;
@@ -25,6 +27,7 @@
     margin-top: 50px;
     margin-bottom: 80px;
     padding: 0;
+    display: block;
 }
 
 @media screen and (max-width: 1279px) {
@@ -36,6 +39,9 @@
         row-gap: 30px;
         width: 708px;
     }
+    .card-list__button {
+        width: 92%;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -46,5 +52,8 @@
         column-gap: 0;
         row-gap: 14px;
         width: 300px;
+    }
+    .card-list__button {
+        width: 93.75%;
     }
 }

@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 89%;
     /* border-bottom: 1px solid rgba(84, 84, 84, 0.7); */
 }
 
@@ -15,12 +16,10 @@
     width: 92%;
 }
 
-.header_loggedin {
-    width: 97.3%;
-}
-
 .header__container {
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .header__container_notloggedin {
@@ -33,4 +32,16 @@
     height: 38px;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        width: 92%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .header {
+        width: 91.25%;
+    }
 }

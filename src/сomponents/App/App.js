@@ -1,7 +1,9 @@
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 import { Route } from 'react-router-dom';
 import React from 'react';
+import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
 
@@ -13,7 +15,10 @@ function App() {
         <Main />
       </Route>
       <Route path="/movies">
-        <Movies />
+        <Movies initialCards={initialCardsMovies} />
+      </Route>  
+      <Route path="/saved-movies">
+        <SavedMovies initialCards={initialCardsSavedMovies} />
       </Route>  
     </div>
   )
