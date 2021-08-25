@@ -1,0 +1,17 @@
+.filtercheckbox__caption {
+    font-size: 14px;
+    line-height: 18px;
+    color: white;
+}
+
+.filtercheckbox {
+    display: flex;
+    align-items: center;
+    margin-top: 41px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filtercheckbox__switch {
+    margin-right: 12px;
+}

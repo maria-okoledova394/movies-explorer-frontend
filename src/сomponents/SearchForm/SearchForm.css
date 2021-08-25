@@ -8,6 +8,12 @@
     align-items: center;
 }
 
+.searchform__container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .searchform__input {
     border: none;
     outline: none;
