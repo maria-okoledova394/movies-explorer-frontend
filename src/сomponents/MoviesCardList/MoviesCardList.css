@@ -5,6 +5,30 @@
     grid-auto-rows: min-content;
     column-gap: 24px;
     row-gap: 37px;
-    width: 100%; 
+    
     margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 1279px) {
+    .card-list {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(4, min-content);
+        grid-auto-rows: min-content;
+        column-gap: 30px;
+        row-gap: 30px;
+        width: 708px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .card-list {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, min-content);
+        grid-auto-rows: min-content;
+        column-gap: 0;
+        row-gap: 14px;
+        width: 300px;
+    }
 }

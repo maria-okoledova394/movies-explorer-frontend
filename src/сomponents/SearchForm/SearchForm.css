@@ -60,6 +60,11 @@
 }
 
 @media screen and (max-width: 425px) {
+    .searchform__container {
+        width: 97.3%;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .searchform__input {
         font-size: 11px;
         width: 65%;
