@@ -1,4 +1,5 @@
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 import { Route } from 'react-router-dom';
 import React from 'react';
 import './App.css';
@@ -8,9 +9,12 @@ function App() {
 
   return (
     <div className="page">
-      <Route path="/">
+      <Route path="/" exact>
         <Main />
-      </Route>      
+      </Route>
+      <Route path="/movies">
+        <Movies />
+      </Route>  
     </div>
   )
 }

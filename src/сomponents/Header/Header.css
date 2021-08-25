@@ -2,8 +2,7 @@
     padding-top: 18px;
     padding-bottom: 18px;
     margin-left: auto;
-    margin-right: auto;
-    width: 92%;
+    margin-right: auto;    
     max-width: 1140px;
     display: flex;
     flex-direction: row;
@@ -12,8 +11,20 @@
     /* border-bottom: 1px solid rgba(84, 84, 84, 0.7); */
 }
 
+.header_loggedin {
+    background-color: #202020;
+}
+
+.header_notloggedin {
+    background-color: #202020;
+    width: 92%;
+}
+
 .header__container {
     width: 100%;
+}
+
+.header__container_notloggedin {
     background-color: #073042;
 }
 
