@@ -107,6 +107,12 @@ const initialCards = [
         link: 'https://p4.wallpaperbetter.com/wallpaper/903/702/479/mountain-grass-meadow-forest-landscape-nature-wallpaper-preview.jpg',
         key: 18
     },
+    {
+        name: '19 карточка',
+        duration: '1ч 47м',
+        link: 'https://p4.wallpaperbetter.com/wallpaper/903/702/479/mountain-grass-meadow-forest-landscape-nature-wallpaper-preview.jpg',
+        key: 19
+    },
 ];
 
 export default initialCards;

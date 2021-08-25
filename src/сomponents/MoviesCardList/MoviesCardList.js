@@ -20,6 +20,13 @@ function MoviesCardList() {
         });
     }
 
+    const handleClick = () => {
+        setCardsCount({
+            itemsToShow: cardsCount.itemsToShow + cardsCount.itemsToAdd,
+            itemsToAdd: cardsCount.itemsToAdd
+        });
+    }
+
     useEffect(() => {
         window.addEventListener("resize", handleResize);
     }, []);
@@ -43,17 +50,20 @@ function MoviesCardList() {
         } else {
             setCardsCount({ 
                 itemsToShow: 5,
-                itemsToAdd: 1
+                itemsToAdd: 2
             });
         }
     }, [width.width]);
 
     return (
         <section className="card-list">
-            {initialCards.slice(0, (cardsCount.itemsToShow)).map((card) => {
-            return(
-                <MoviesCard key={card.key} card={card} isLiked={true} />
-            )})}
+            <div className="card-list__container">
+                {initialCards.slice(0, (cardsCount.itemsToShow)).map((card) => {
+                return(
+                    <MoviesCard key={card.key} card={card} isLiked={true} />
+                )})}
+            </div>
+            <button className="card-list__button" onClick={handleClick}>Ещё</button>
         </section>
     )
   }
