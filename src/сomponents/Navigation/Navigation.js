@@ -35,9 +35,9 @@ function Navigation(props) {
                     <button className={closeButtonClassName} onClick={handleClick}></button>
                     <ul className={linksClassName}>
                         <li className="navigation__main-link"><Link className="navigation__link navigation__link_loggedin" to="/">Главная</Link></li>
-                        <li className="navigation__movies-link"><Link className="navigation__link navigation__link_loggedin" to="/signin">Фильмы</Link></li>
-                        <li className="navigation__saved-movies-link"><Link className="navigation__link navigation__link_loggedin" to="/signup">Сохраненные Фильмы</Link></li>
-                        <li className="navigation__account-link"><Link className="navigation__link navigation__link_loggedin" to="/signup">Аккаунт<img className="navigation__account-icon" alt="иконка Аккаунт" src={accountIcon}></img></Link></li>
+                        <li className="navigation__movies-link"><Link className="navigation__link navigation__link_loggedin" to="/movies">Фильмы</Link></li>
+                        <li className="navigation__saved-movies-link"><Link className="navigation__link navigation__link_loggedin" to="/saved-movies">Сохраненные Фильмы</Link></li>
+                        <li className="navigation__account-link"><Link className="navigation__link navigation__link_loggedin" to="/profile">Аккаунт<img className="navigation__account-icon" alt="иконка Аккаунт" src={accountIcon}></img></Link></li>
                     </ul>
                 </section>
             :
