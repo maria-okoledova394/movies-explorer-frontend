@@ -215,7 +215,7 @@
         position: relative;
     }
     .navigation__account-link {
-        margin: 60.6vh 0 90px 0;
+        margin: auto auto 8.7vh  auto;
     }
 }
 
@@ -249,5 +249,8 @@
     }
     .navigation__link_login {
         padding: 5px 12px 5px 12px;
+    }
+    .navigation__account-link {
+        margin: auto auto 5.9vh  auto;
     }
 }
