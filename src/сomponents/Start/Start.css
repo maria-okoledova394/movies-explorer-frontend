@@ -11,6 +11,7 @@
     height: 38px;
     background-size: contain;
     background-repeat: no-repeat;
+    display: block;
 }
 
 .start__title {
@@ -67,7 +68,7 @@
     font-weight: 400;
     color: white;
     border-radius: 3px;
-    padding: 0;
+    padding: 0;    
 }
 
 .start__input-error {

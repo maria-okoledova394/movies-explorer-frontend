@@ -54,7 +54,7 @@ function Start(props) {
 
     return (
         <section className="start">
-            <div className="start__logo" alt="Логотип"></div>
+            <Link className="start__logo" alt="Логотип" to="/"></Link>
             <h1 className="start__title">{props.register ? "Добро пожаловать!": "Рады видеть!"}</h1>
             <form className="start__form" noValidate>
                 <label className="start__placeholder">Имя</label>
