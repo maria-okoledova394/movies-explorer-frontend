@@ -43,6 +43,7 @@
 
 .profile__input:hover {
     cursor: text;
+    outline: 1px solid rgba(139,139,139);
 }
 
 ::-webkit-input-placeholder{
