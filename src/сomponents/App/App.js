@@ -1,6 +1,8 @@
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Register from '../Register/Register';
+import Login from '../Login/Login';
 import { Route } from 'react-router-dom';
 import React from 'react';
 import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
@@ -20,6 +22,12 @@ function App() {
       <Route path="/saved-movies">
         <SavedMovies initialCards={initialCardsSavedMovies} />
       </Route>  
+      <Route path="/signup">
+        <Register />
+      </Route>
+      <Route path="/signin">
+        <Login />
+      </Route>
     </div>
   )
 }
