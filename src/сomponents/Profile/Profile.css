@@ -41,6 +41,10 @@
     text-align: right;
 }
 
+.profile__input:hover {
+    cursor: text;
+}
+
 ::-webkit-input-placeholder{
     text-align:left;
     font-weight: 500;
@@ -68,6 +72,11 @@
     background-color: #202020;
 }
 
+.profile__button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .profile__button_edit {
     color: white;
     margin-top: 220px;
@@ -88,6 +97,10 @@
     color: #EE3465;
 }
 
+.profile__input-error:hover {
+    cursor: text;
+}
+
 .profile__input-error_notvisible {
     display: none;
 }
@@ -105,6 +118,11 @@
 .profile__link {
     text-decoration: none;
     color: #EE3465;
+}
+
+.profile__link:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

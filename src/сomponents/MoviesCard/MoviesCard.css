@@ -45,6 +45,11 @@
     outline: none;
 }
 
+.card__like-button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .card__duration {
     position: absolute;
     bottom: 0;

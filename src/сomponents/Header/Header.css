@@ -41,6 +41,11 @@
     margin-bottom: auto;
 }
 
+.header__logo:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
     .header {
         width: 92%;

@@ -14,8 +14,8 @@ function SearchForm() {
 
     return (
         <div className="searchform__container">
-            <form className="searchform">
-                <input name="film" className="searchform__input" placeholder="Фильм" value={inputData.value} onChange={handleChange}></input>
+            <form className="searchform" noValidate>
+                <input name="film" className="searchform__input" placeholder="Фильм" value={inputData.value} onChange={handleChange} required></input>
                 <button type="submit" className="searchform__button"></button>      
             </form>
             <FilterCheckbox />

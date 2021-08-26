@@ -67,6 +67,11 @@
     text-decoration: none;
 }
 
+.aboutme__link:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 .aboutme__links {
     padding: 0;
     display: flex;
