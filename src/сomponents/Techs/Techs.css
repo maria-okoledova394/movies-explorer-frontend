@@ -20,7 +20,8 @@
 }
 
 .techs__line {
-    color: #DADADA;
+    border: 0;
+    border-top: 1px solid #DADADA;
     margin-top: 23px;
     margin-bottom: 0;
     width: 100%;

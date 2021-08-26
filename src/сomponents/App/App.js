@@ -3,6 +3,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import Profile from '../Profile/Profile';
 import { Route } from 'react-router-dom';
 import React from 'react';
 import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
@@ -27,6 +28,9 @@ function App() {
       </Route>
       <Route path="/signin">
         <Login />
+      </Route>
+      <Route path="/profile">
+        <Profile />
       </Route>
     </div>
   )
