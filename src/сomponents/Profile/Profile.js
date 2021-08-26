@@ -51,7 +51,7 @@ function Profile() {
                     <span className={errorEmailClassName}>Что-то пошло не так...</span>
                     <button type="submit" className="profile__button profile__button_edit">Редактировать</button>
                 </form>
-                <button className="profile__button profile__button_exit"><Link to="/main" className="profile__link">Выйти из аккаунта</Link></button>
+                <button className="profile__button profile__button_exit"><Link to="/" className="profile__link">Выйти из аккаунта</Link></button>
             </section>
         </>
     )

@@ -72,12 +72,14 @@
     color: white;
     margin-top: 220px;
     font-weight: 400;
+    padding: 0;
 }
 
 .profile__button_exit {
     color: #EE3465;
     margin-top: 16px;
     font-weight: 500;
+    padding: 0;
 }
 
 .profile__input-error {

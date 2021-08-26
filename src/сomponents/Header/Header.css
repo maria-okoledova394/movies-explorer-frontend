@@ -1,6 +1,4 @@
 .header {
-    padding-top: 18px;
-    padding-bottom: 18px;
     margin-left: auto;
     margin-right: auto;    
     max-width: 1140px;
@@ -14,6 +12,13 @@
 .header_notloggedin {
     background-color: #073042;
     width: 92%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.header_loggedin {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .header__container {
@@ -32,6 +37,8 @@
     height: 38px;
     background-size: contain;
     background-repeat: no-repeat;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 @media screen and (max-width: 768px) {

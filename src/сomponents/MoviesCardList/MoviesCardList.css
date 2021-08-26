@@ -13,6 +13,7 @@
 
 .card-list__button {
     width: 89%;
+    padding: 0;
     margin-right: auto;
     margin-left: auto;
     background-color: #2F2F2F;
