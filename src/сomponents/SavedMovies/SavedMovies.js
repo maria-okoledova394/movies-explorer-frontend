@@ -11,7 +11,7 @@ function SavedMovies(props) {
       <section className="movies">
         <Header loggedIn={true} />
         <SearchForm />
-        <MoviesCardList initialCards={props.initialCards} />
+        <MoviesCardList initialCards={props.initialCards} saved={true} />
         <Footer />
       </section>
     )
