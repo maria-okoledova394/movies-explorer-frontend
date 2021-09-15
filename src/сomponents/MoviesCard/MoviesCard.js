@@ -9,10 +9,10 @@ function MoviesCard(props) {
 
     return (
         <div className="card">
-            <img className="card__image" alt={props.card.name} src={props.card.link}/>
+            <img className="card__image" alt={props.card.name} src={`https://api.nomoreparties.co${props.card.image.url}`}/>
             <div className="card__info">
                 <div className="card__info-row">
-                    <h2 className="card__title">{props.card.name}</h2>
+                    <h2 className="card__title">{props.card.nameRU}</h2>
                     {props.saved
                     ?
                     <button className="card__dislike-button" type="button"></button>

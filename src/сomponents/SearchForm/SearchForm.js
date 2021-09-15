@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm() {
+function SearchForm(props) {
     const [inputData, setInputData] = useState({
         value: ''
     });
@@ -14,7 +14,7 @@ function SearchForm() {
 
     return (
         <div className="searchform__container">
-            <form className="searchform" noValidate>
+            <form className="searchform" noValidate onSubmit={props.onGetCards}>
                 <input name="film" className="searchform__input" placeholder="Фильм" value={inputData.value} onChange={handleChange} required></input>
                 <button type="submit" className="searchform__button"></button>      
             </form>
