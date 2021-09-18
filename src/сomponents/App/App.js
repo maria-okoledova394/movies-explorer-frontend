@@ -1,16 +1,45 @@
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import mainApi from '../../utils/MainApi';
 import { Route } from 'react-router-dom';
-import React from 'react';
 import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
 
 function App() {
+  const history = useHistory();
+
+  const [userData, setUserData] = useState({
+    name: ' ',
+    email: ' '
+  });
+  const [isMistake, setIsMistake] = useState(false);
+
+  function handleError (error) {
+    console.error(error)
+  }
+
+  function onRegister({ name, email, password }) {
+    mainApi.register(name, email, password)
+      .then((res) => {
+        setUserData({
+          name: res.name,
+          email: res.email
+        })
+        setIsMistake(false)
+        history.push('/signin')
+      })
+      .catch((error) => {
+        handleError(error)
+        setIsMistake(true)
+      })
+  }
 
   return (
     <div className="page">
@@ -24,7 +53,7 @@ function App() {
         <SavedMovies initialCards={initialCardsSavedMovies} />
       </Route>  
       <Route path="/signup">
-        <Register />
+        <Register onSubmit={onRegister} />
       </Route>
       <Route path="/signin">
         <Login />

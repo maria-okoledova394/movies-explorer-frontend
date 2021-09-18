@@ -1,4 +1,28 @@
-getSavedCards() {
+class MainApi{
+  constructor(config) {
+    this._url = config.url;
+    this._headers = config.headers;
+  }
+
+  _checkResponse = (res) =>{
+    if(res.ok){
+      return res.json();    
+    }
+    console.log("Ошибка");
+    console.log(res.status);
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  register(name, password, email) {
+    return fetch(`${this._url}/signup`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({name, password, email})
+    })
+    .then(this._checkResponse)
+  };
+  
+  getSavedCards() {
     return fetch(`${this._url}/movies`, {
         method: "GET",
         headers: this._headers
@@ -48,3 +72,14 @@ getSavedCards() {
   setToken(token) {
     this._headers.Authorization = token;
   }
+}
+
+const mainApi = new MainApi({
+  url: "https://api.movies.box.nomoredomains.club",
+  headers: {
+    "content-type": "application/json",
+    "Authorization": ""
+  }
+})
+
+export default mainApi;
