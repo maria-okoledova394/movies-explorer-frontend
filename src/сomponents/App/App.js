@@ -20,20 +20,50 @@ function App() {
     email: ' '
   });
   const [isMistake, setIsMistake] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function handleError (error) {
     console.error(error)
   }
 
+  function checkToken() {
+    const token = localStorage.getItem('token')
+    
+    if (token) {
+      mainApi.setToken(token);
+      mainApi.getContent(token)
+        .then((res) => {
+          if (res){
+            setUserData({
+              name: res.name,
+              email: res.email
+            })
+            setLoggedIn(true)
+            history.push("/movies")
+          }
+        })
+        .catch(handleError)
+    }
+  }
+
   function onRegister({ name, email, password }) {
     mainApi.register(name, email, password)
       .then((res) => {
-        setUserData({
-          name: res.name,
-          email: res.email
-        })
         setIsMistake(false)
-        history.push('/signin')
+        return(res);
+      })
+      .then(() => {
+        mainApi.authorize(email, password)
+        .then((res) => {
+          const token = res.token
+          if (token) {
+            localStorage.setItem('token', token)
+            checkToken();
+          }
+        })
+      })
+      .then(()=> {
+        history.push('/movies')
       })
       .catch((error) => {
         handleError(error)

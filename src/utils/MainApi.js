@@ -13,7 +13,7 @@ class MainApi{
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  register(name, password, email) {
+  register(name, email, password) {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
@@ -21,6 +21,32 @@ class MainApi{
     })
     .then(this._checkResponse)
   };
+
+  authorize(email, password) {
+    return fetch(`${this._url}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email, password})
+    })
+    .then(this._checkResponse)
+  };
+
+  setToken(token) {
+    this._headers.Authorization = token;
+  }
+
+  getContent(token) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'GET',
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization" : `Bearer ${token}`
+      } 
+    })
+    .then(this._checkResponse)
+  }
   
   getSavedCards() {
     return fetch(`${this._url}/movies`, {

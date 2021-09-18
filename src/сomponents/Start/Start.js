@@ -16,16 +16,6 @@ function Start(props) {
         password: '',
     });
 
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setUserData({
-          ...userData,
-          [name]: value
-        });
-
-        e.target.validity.valid ? setError({ ...error, [name]: false }) : setError({ ...error, [name]:true })
-      }
-
     const errorNameClassName = (
         `start__input-error ${error.name ? 'start__input-error_visible' : 'start__input-error_notvisible'}`
     );
@@ -35,6 +25,16 @@ function Start(props) {
     const errorPasswordClassName = (
         `start__input-error ${error.password ? 'start__input-error_visible' : 'start__input-error_notvisible'}`
     );
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setUserData({
+          ...userData,
+          [name]: value
+        });
+
+        e.target.validity.valid ? setError({ ...error, [name]: false }) : setError({ ...error, [name]:true })
+      }
 
     function handleSubmit(e) {
         e.preventDefault();
