@@ -1,10 +1,10 @@
 import React from 'react';
 import Start from '../Start/Start';
 
-function Register() {
+function Register(props) {
 
     return (
-        <Start register={false} />
+        <Start register={false} onSubmit={props.onSubmit} />
     )
   }
   

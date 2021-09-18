@@ -8,8 +8,6 @@ class MainApi{
     if(res.ok){
       return res.json();    
     }
-    console.log("Ошибка");
-    console.log(res.status);
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
@@ -30,22 +28,16 @@ class MainApi{
       },
       body: JSON.stringify({email, password})
     })
-    .then(this._checkResponse)
+    .then((res) => {
+        if(res.ok){
+          return res;    
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+    })
   };
 
   setToken(token) {
     this._headers.Authorization = token;
-  }
-
-  getContent(token) {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization" : `Bearer ${token}`
-      } 
-    })
-    .then(this._checkResponse)
   }
   
   getSavedCards() {
@@ -58,7 +50,8 @@ class MainApi{
   getProfileInfo() {
     return fetch(`${this._url}/users/me`, {
         method: "GET",
-        headers: this._headers
+        headers: this._headers,
+        credentials: 'include'
       }).then(this._checkResponse)
   }
 

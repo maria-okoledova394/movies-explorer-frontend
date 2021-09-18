@@ -7,6 +7,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { Route } from 'react-router-dom';
 import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
 import './App.css';
@@ -26,24 +27,24 @@ function App() {
     console.error(error)
   }
 
-  function checkToken() {
-    const token = localStorage.getItem('token')
-    
-    if (token) {
-      mainApi.setToken(token);
-      mainApi.getContent(token)
-        .then((res) => {
-          if (res){
-            setUserData({
-              name: res.name,
-              email: res.email
-            })
-            setLoggedIn(true)
-            history.push("/movies")
-          }
-        })
-        .catch(handleError)
-    }
+  function onLogin({ email, password }) {
+    mainApi.authorize(email, password)
+    .then(() => {
+      return mainApi.getProfileInfo()
+      .then((res) => {
+        if (res){
+          setUserData({
+            name: res.name,
+            email: res.email
+          })
+          setLoggedIn(true)
+        }
+      })
+    })
+    .then(()=> {
+      history.push('/movies')
+    })
+    .catch(handleError)
   }
 
   function onRegister({ name, email, password }) {
@@ -53,17 +54,7 @@ function App() {
         return(res);
       })
       .then(() => {
-        mainApi.authorize(email, password)
-        .then((res) => {
-          const token = res.token
-          if (token) {
-            localStorage.setItem('token', token)
-            checkToken();
-          }
-        })
-      })
-      .then(()=> {
-        history.push('/movies')
+        onLogin({ email, password })
       })
       .catch((error) => {
         handleError(error)
@@ -76,9 +67,7 @@ function App() {
       <Route path="/" exact>
         <Main />
       </Route>
-      <Route path="/movies">
-        <Movies initialCards={initialCardsMovies} />
-      </Route>  
+      <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies} initialCards={initialCardsMovies} />
       <Route path="/saved-movies">
         <SavedMovies initialCards={initialCardsSavedMovies} />
       </Route>  
@@ -86,7 +75,7 @@ function App() {
         <Register onSubmit={onRegister} />
       </Route>
       <Route path="/signin">
-        <Login />
+        <Login onSubmit={onRegister} />
       </Route>
       <Route path="/profile">
         <Profile />
