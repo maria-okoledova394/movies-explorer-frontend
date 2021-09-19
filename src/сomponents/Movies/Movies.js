@@ -8,14 +8,25 @@ import moviesApi from '../../utils/MoviesApi';
 
 function Movies(props) {
 
-  const [cards, setCards] = useState([]);
+  const [filmCards, setFilmCards] = useState([]);
+  const [searchWords, setSearchWords] = useState([]);
 
-  function handleSearchMovie(e) {
-    e.preventDefault();
+  function handleSetSearchWords(words) {
+    setSearchWords(words)
+  }
 
+  function handleSearchMovie() {
     moviesApi.getSearcheddCards()
-    .then (data => {
-      setCards(data);
+    .then((data) => {
+      var films = []
+      data.map((card) => {
+          searchWords.map((word) => {
+              if (card.nameRU.toUpperCase().includes(word.toUpperCase())) {
+                  films.push(card);
+              }
+          })
+      })
+      setFilmCards(films)
     })
     .catch(err => {
       console.log(err);
@@ -25,8 +36,8 @@ function Movies(props) {
   return (
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
-      <SearchForm onGetCards={handleSearchMovie}/>
-      <MoviesCardList initialCards={cards} saved={false} />
+      <SearchForm onSearchMovie={handleSearchMovie} onSetSearchWords={handleSetSearchWords} />
+      <MoviesCardList cards={filmCards} saved={false} />
       <Footer />
     </section>
   )
