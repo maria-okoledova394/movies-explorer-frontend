@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -8,7 +8,6 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { Route } from 'react-router-dom';
 import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
@@ -100,20 +99,20 @@ function App() {
 
   return (
     <div className="page">
-      <Route path="/" exact>
-        <Main />
-      </Route>
-      <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies}  onSignOut={onSignOut} initialCards={initialCardsMovies} />
-      <Route path="/saved-movies"  onSignOut={onSignOut}>
-        <SavedMovies initialCards={initialCardsSavedMovies} />
-      </Route>  
-      <Route path="/signup">
-        <Register onSubmit={onRegister} />
-      </Route>
-      <Route path="/signin">
-        <Login onSubmit={onLogin} />
-      </Route>
-      <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
+      <Switch>
+        <Route path="/" exact>
+          <Main />
+        </Route>
+        <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies}  onSignOut={onSignOut} />
+        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies}  onSignOut={onSignOut} />
+        <Route path="/signup">
+          <Register onSubmit={onRegister} />
+        </Route>
+        <Route path="/signin">
+          <Login onSubmit={onLogin} />
+        </Route>
+        <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
+      </Switch>
     </div>
   )
 }
