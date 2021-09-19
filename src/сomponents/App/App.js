@@ -16,6 +16,26 @@ import '../../vendor/fonts/fonts.css';
 function App() {
   const history = useHistory();
 
+  /* useEffect(() => {
+    mainApi.getProfileInfo()
+    .then((res) => {
+      if (res){
+        setUserData({
+          name: res.name,
+          email: res.email
+        })
+        setLoggedIn(true)
+      }
+    })
+    .then(()=> {
+      history.push('/movies')
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+  }, []); */
+
   const [userData, setUserData] = useState({
     name: ' ',
     email: ' '
@@ -75,7 +95,7 @@ function App() {
         <Register onSubmit={onRegister} />
       </Route>
       <Route path="/signin">
-        <Login onSubmit={onRegister} />
+        <Login onSubmit={onLogin} />
       </Route>
       <Route path="/profile">
         <Profile />
