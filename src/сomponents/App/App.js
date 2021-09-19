@@ -16,7 +16,7 @@ import '../../vendor/fonts/fonts.css';
 function App() {
   const history = useHistory();
 
-  /* useEffect(() => {
+  useEffect(() => {
     mainApi.getProfileInfo()
     .then((res) => {
       if (res){
@@ -34,7 +34,7 @@ function App() {
       console.log(err);
     })
 
-  }, []); */
+  }, []);
 
   const [userData, setUserData] = useState({
     name: ' ',
