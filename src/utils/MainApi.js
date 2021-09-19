@@ -37,14 +37,25 @@ class MainApi{
     })
   };
 
-  setToken(token) {
-    this._headers.Authorization = token;
-  }
+  logout() {
+    return fetch(`${this._url}/signout`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then((res) => {
+      if(res.ok){
+        return res;    
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+  };
   
   getSavedCards() {
     return fetch(`${this._url}/movies`, {
         method: "GET",
-        headers: this._headers
+        headers: this._headers,
+        credentials: 'include',
       }).then(this._checkResponse)
   }
 
@@ -88,17 +99,12 @@ class MainApi{
       return this.removeLike(_id);
     }
   }
-
-  setToken(token) {
-    this._headers.Authorization = token;
-  }
 }
 
 const mainApi = new MainApi({
   url: "https://api.movies.box.nomoredomains.club",
   headers: {
     "content-type": "application/json",
-    "Authorization": ""
   }
 })
 

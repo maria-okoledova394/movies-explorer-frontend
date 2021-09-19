@@ -24,7 +24,7 @@ function Movies(props) {
 
   return (
     <section className="movies">
-      <Header loggedIn={true} />
+      <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onGetCards={handleSearchMovie}/>
       <MoviesCardList initialCards={cards} saved={false} />
       <Footer />

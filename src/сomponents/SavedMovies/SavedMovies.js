@@ -9,7 +9,7 @@ function SavedMovies(props) {
 
     return (
       <section className="movies">
-        <Header loggedIn={true} />
+        <Header loggedIn={true} onSignOut={props.onSignOut} />
         <SearchForm />
         <MoviesCardList initialCards={props.initialCards} saved={true} />
         <Footer />

@@ -82,13 +82,29 @@ function App() {
       })
   }
 
+  function onSignOut() {
+    mainApi.logout()
+    .then((res) => {
+      setUserData({
+        name: ' ',
+        email: ' '
+      })
+      setLoggedIn(false)
+      return(res)
+    })
+    .catch((error) => {
+      handleError(error)
+      setIsMistake(true)
+    })
+  }
+
   return (
     <div className="page">
       <Route path="/" exact>
         <Main />
       </Route>
-      <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies} initialCards={initialCardsMovies} />
-      <Route path="/saved-movies">
+      <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies}  onSignOut={onSignOut} initialCards={initialCardsMovies} />
+      <Route path="/saved-movies"  onSignOut={onSignOut}>
         <SavedMovies initialCards={initialCardsSavedMovies} />
       </Route>  
       <Route path="/signup">
@@ -97,9 +113,7 @@ function App() {
       <Route path="/signin">
         <Login onSubmit={onLogin} />
       </Route>
-      <Route path="/profile">
-        <Profile />
-      </Route>
+      <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
     </div>
   )
 }
