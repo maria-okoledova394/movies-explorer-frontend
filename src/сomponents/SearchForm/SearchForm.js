@@ -24,7 +24,7 @@ function SearchForm(props) {
                 <input name="film" className="searchform__input" placeholder="Фильм" value={inputData.value} onChange={handleChange} required></input>
                 <button type="submit" className="searchform__button"></button>      
             </form>
-            <FilterCheckbox />
+            <FilterCheckbox handleChangeCheckbox={props.handleChangeCheckbox} isCheckbox={props.isCheckbox} />
             <hr className="searchform__line"></hr>
         </div>
     )

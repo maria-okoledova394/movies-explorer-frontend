@@ -10,10 +10,16 @@ function Movies(props) {
 
   const [filtredMovies, setFiltredMovies] = useState([]);
   const [searchWords, setSearchWords] = useState([]);
+  const [isCheckbox, setIsCheckbox] = useState({ checked: false });
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
   }
+
+  function handleChangeCheckbox(checked) {
+    setIsCheckbox({ checked });
+  }
+
 
   function handleSearchMovies() {
     moviesApi.getSearchedMovies()
@@ -21,7 +27,7 @@ function Movies(props) {
       var films = []
       searchMovies.map((searchMovie) => {
           searchWords.map((word) => {
-              if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase())) {
+              if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? searchMovie.duration <= 40 : searchMovie.duration > 0)) {
                   films.push({
                     country: searchMovie.country,
                     director: searchMovie.director,
@@ -48,7 +54,7 @@ function Movies(props) {
   return (
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
-      <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} />
+      <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
       <MoviesList savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>

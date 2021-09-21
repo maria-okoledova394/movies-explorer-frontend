@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import Switch from "react-switch";
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
-    const [state, setState] = useState({ checked: false });
+function FilterCheckbox(props) {
 
-    
     function handleChange(checked) {
-        setState({ checked });
+        props.handleChangeCheckbox(checked);
     }
 
     return (
@@ -15,7 +13,7 @@ function FilterCheckbox() {
             <Switch
             className="filtercheckbox__switch"
             onChange={handleChange}
-            checked={state.checked}
+            checked={props.isCheckbox.checked}
             offColor="#EBEBEB"
             onColor="#F5C32C"
             offHandleColor="#F5F5F5"
