@@ -22,7 +22,19 @@ function Movies(props) {
       searchMovies.map((searchMovie) => {
           searchWords.map((word) => {
               if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase())) {
-                  films.push(searchMovie);
+                  films.push({
+                    country: searchMovie.country,
+                    director: searchMovie.director,
+                    duration: searchMovie.duration,
+                    year: searchMovie.year,
+                    description: searchMovie.description,
+                    image: `https://api.nomoreparties.co${searchMovie.image.url}`,
+                    trailer: searchMovie.trailerLink,
+                    nameRU: searchMovie.nameRU,
+                    nameEN: searchMovie.nameEN,
+                    thumbnail: `https://api.nomoreparties.co${searchMovie.image.formats.thumbnail.url}`,
+                    movieId: searchMovie.id,
+                  });
               }
           })
       })

@@ -3,7 +3,7 @@ import './MoviesList.css';
 import MovieCard from '../MovieCard/MovieCard';
 
 function MoviesList(props) {
-    const filtredMovies = props.movies;
+    const movies = props.movies;
 
     const [moviesCardsCount, setMoviesCardsCount] = useState({
         itemsToShow: 0,
@@ -58,9 +58,9 @@ function MoviesList(props) {
     return (
         <section className="card-list">
             <div className="card-list__container">
-                {filtredMovies.slice(0, (moviesCardsCount.itemsToShow)).map((movieCard) => {
+                {movies.slice(0, (moviesCardsCount.itemsToShow)).map((movieCard) => {
                 return(
-                    <MovieCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={movieCard.id} movieCard={movieCard} saved={props.saved} />
+                    <MovieCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={movieCard.movieId} movieCard={movieCard} saved={props.saved} />
                 )})}
             </div>
             <button className="card-list__button" onClick={handleClick}>Ещё</button>

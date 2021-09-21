@@ -11,7 +11,7 @@ function SavedMovies(props) {
     <section className="movies">
       <Header loggedIn={true} onSignOut={props.onSignOut} />
       <SearchForm />
-      <MoviesList movies={props.savedMovies} saved={true} />
+      <MoviesList movies={props.savedMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />
       <Footer />
     </section>
   )

@@ -44,7 +44,6 @@ function App() {
     mainApi.getSavedMovies()
     .then((res) => {
       if (res){
-        console.log(res)
         setSavedMovies(res.movies)
       }
     })
@@ -65,16 +64,14 @@ function App() {
         duration: movie.duration,
         year: movie.year,
         description: movie.description,
-        image: `https://api.nomoreparties.co${movie.image.url}`,
-        trailer: movie.trailerLink,
+        image: movie.image,
+        trailer: movie.trailer,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
-        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
-        movieId: movie.id,
+        thumbnail: movie.thumbnail,
+        movieId: movie.movieId,
     })
     .then (newSavedMovie => {
-      console.log('setSavedMovies after like')
-      console.log(newSavedMovie)
       setSavedMovies([newSavedMovie, ...savedMovies]);
     })
     .catch(err => {
@@ -150,7 +147,7 @@ function App() {
           <Main />
         </Route>
         <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
-        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} savedMovies={savedMovies} onSignOut={onSignOut} />
+        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
         <Route path="/signup">
           <Register onSubmit={onRegister} />
         </Route>
