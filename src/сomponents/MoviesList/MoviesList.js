@@ -4,16 +4,14 @@ import MovieCard from '../MovieCard/MovieCard';
 
 function MoviesList(props) {
     const movies = props.movies;
-
     const [moviesCardsCount, setMoviesCardsCount] = useState({
         itemsToShow: 0,
         itemsToAdd: 0
     });
-
     const [width, setWidth] = React.useState({
         width: window.innerWidth
     });
-
+    var moviesRemains = props.movies.length
     const handleResize = () => {
         setWidth({
         width: window.innerWidth,
@@ -32,9 +30,7 @@ function MoviesList(props) {
     }, []);
 
     useEffect(() => {
-        // получим корневой элемент <html>
         const $html = document.documentElement;
-        // узнаем его ширину
         const width = $html.clientWidth;
 
         if (width >= 1280) {
@@ -59,11 +55,12 @@ function MoviesList(props) {
         <section className="card-list">
             <div className="card-list__container">
                 {movies.slice(0, (moviesCardsCount.itemsToShow)).map((movieCard) => {
-                return(
-                    <MovieCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={movieCard.movieId} movieCard={movieCard} saved={props.saved} />
-                )})}
+                    moviesRemains = moviesRemains - 1
+                    return(
+                        <MovieCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={movieCard.movieId} movieCard={movieCard} saved={props.saved} />
+                    )})}
             </div>
-            <button className="card-list__button" onClick={handleClick}>Ещё</button>
+            {(props.showButton && movies.length > 3 && moviesRemains > 0) ? <button className="card-list__button" onClick={handleClick}>Ещё</button> : <></>}            
         </section>
     )
   }

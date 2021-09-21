@@ -11,6 +11,7 @@ function Movies(props) {
   const [filtredMovies, setFiltredMovies] = useState([]);
   const [searchWords, setSearchWords] = useState([]);
   const [isCheckbox, setIsCheckbox] = useState({ checked: false });
+  const [showButton, setShowButton] = useState(false);
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
@@ -45,6 +46,7 @@ function Movies(props) {
           })
       })
       setFiltredMovies(films)
+      setShowButton(true)
     })
     .catch(err => {
       console.log(err);
@@ -55,7 +57,7 @@ function Movies(props) {
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
-      <MoviesList savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
+      <MoviesList showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>
   )

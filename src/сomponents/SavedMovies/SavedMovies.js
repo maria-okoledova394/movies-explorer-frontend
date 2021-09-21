@@ -4,7 +4,6 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesList from '../MoviesList/MoviesList';
 import Footer from '../Footer/Footer';
-import mainApi from '../../utils/MainApi';
 
 function SavedMovies(props) {
 
@@ -48,7 +47,7 @@ function SavedMovies(props) {
     <section className="movies">
       <Header loggedIn={true} onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
-      <MoviesList movies={savedFilteredMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />
+      <MoviesList showButton={true} movies={savedFilteredMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />
       <Footer />
     </section>
   )
