@@ -51,7 +51,7 @@ class MainApi{
     })
   };
   
-  getSavedCards() {
+  getSavedMovies() {
     return fetch(`${this._url}/movies`, {
         method: "GET",
         headers: this._headers,
@@ -71,7 +71,8 @@ class MainApi{
     return fetch(`${this._url}/users/me`, {
         method: "PATCH",
         headers: this._headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials: 'include'
       }).then(this._checkResponse)
   }
 
@@ -79,25 +80,19 @@ class MainApi{
     return fetch(`${this._url}/movies/${_id}`, {
       method: "DELETE",
       headers: this._headers,
+      credentials: 'include'
     })
     .then(this._checkResponse)
   }
 
-  addToSaved(_id) {
-    return fetch(`${this._url}/cards/${_id}`, {
-      method: "PUT",
+  addToSaved(data) {
+    return fetch(`${this._url}/movies`, {
+      method: "POST",
       headers: this._headers,
+      body: JSON.stringify(data),
+      credentials: 'include'
     })
     .then(this._checkResponse)
-  }
-
-  changeLikeCardStatus(_id, isLiked) {
-    if (isLiked) {
-      return this.likeCard(_id);
-    }
-    else {        
-      return this.removeLike(_id);
-    }
   }
 }
 

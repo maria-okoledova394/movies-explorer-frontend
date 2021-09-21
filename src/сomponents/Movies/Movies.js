@@ -37,7 +37,7 @@ function Movies(props) {
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onSearchMovie={handleSearchMovie} onSetSearchWords={handleSetSearchWords} />
-      <MoviesCardList cards={filmCards} saved={false} />
+      <MoviesCardList savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} cards={filmCards} saved={false} />
       <Footer />
     </section>
   )

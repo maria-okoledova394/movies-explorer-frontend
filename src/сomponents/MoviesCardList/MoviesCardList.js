@@ -60,7 +60,7 @@ function MoviesCardList(props) {
             <div className="card-list__container">
                 {finalCards.slice(0, (cardsCount.itemsToShow)).map((card) => {
                 return(
-                    <MoviesCard key={card.id} card={card} isLiked={true} saved={props.saved} />
+                    <MoviesCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={card.id} card={card} saved={props.saved} />
                 )})}
             </div>
             <button className="card-list__button" onClick={handleClick}>Ещё</button>

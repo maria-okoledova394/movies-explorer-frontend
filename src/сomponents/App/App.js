@@ -15,7 +15,16 @@ import '../../vendor/fonts/fonts.css';
 function App() {
   const history = useHistory();
 
+  
+  const [userData, setUserData] = useState({
+    name: ' ',
+    email: ' '
+  });
+  const [isMistake, setIsMistake] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
+
     mainApi.getProfileInfo()
     .then((res) => {
       if (res){
@@ -33,17 +42,57 @@ function App() {
       console.log(err);
     })
 
-  }, []);
+    mainApi.getSavedMovies()
+    .then((res) => {
+      if (res){
+        console.log(res)
+        setSavedMovies(res.movies)
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
 
-  const [userData, setUserData] = useState({
-    name: ' ',
-    email: ' '
-  });
-  const [isMistake, setIsMistake] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  }, []);
 
   function handleError (error) {
     console.error(error)
+  }
+
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  function handleLike (movie) {
+    mainApi.addToSaved({
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `https://api.nomoreparties.co${movie.image.url}`,
+        trailer: movie.trailerLink,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+    })
+    .then (newSavedMovie => {
+      console.log('setSavedMovies after like')
+      console.log(newSavedMovie)
+      setSavedMovies([newSavedMovie, ...savedMovies]);
+    })
+    .catch(err => {
+    console.log(err);
+    })
+  }
+
+  function handleDislike (savedMoviedId) {
+    mainApi.removeFromSaved(savedMoviedId)
+    .then (removedMovie => {
+      setSavedMovies((state) => state.filter((c) => c._id !== savedMoviedId));
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   function onLogin({ email, password }) {
@@ -103,8 +152,8 @@ function App() {
         <Route path="/" exact>
           <Main />
         </Route>
-        <ProtectedRoute path="/movies" loggedIn={loggedIn} component={Movies}  onSignOut={onSignOut} />
-        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies}  onSignOut={onSignOut} />
+        <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
+        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} savedMovies={savedMovies} onSignOut={onSignOut} />
         <Route path="/signup">
           <Register onSubmit={onRegister} />
         </Route>
