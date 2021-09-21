@@ -8,14 +8,13 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { initialCardsMovies, initialCardsSavedMovies } from '../../utils/constants';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
 
 function App() {
   const history = useHistory();
 
-  
+  const [savedMovies, setSavedMovies] = useState([]);
   const [userData, setUserData] = useState({
     name: ' ',
     email: ' '
@@ -58,8 +57,6 @@ function App() {
   function handleError (error) {
     console.error(error)
   }
-
-  const [savedMovies, setSavedMovies] = useState([]);
 
   function handleLike (movie) {
     mainApi.addToSaved({

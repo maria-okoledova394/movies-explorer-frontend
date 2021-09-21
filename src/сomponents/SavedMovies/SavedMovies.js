@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MoviesList from '../MoviesList/MoviesList';
 import Footer from '../Footer/Footer';
 
 function SavedMovies(props) {
-
-  const [cards, setCards] = useState([]);
 
   return (
     <section className="movies">
       <Header loggedIn={true} onSignOut={props.onSignOut} />
       <SearchForm />
-      <MoviesCardList initialCards={cards} saved={true} />
+      <MoviesList movies={props.savedMovies} saved={true} />
       <Footer />
     </section>
   )

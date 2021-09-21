@@ -2,31 +2,31 @@ import React, { useState } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MoviesList from '../MoviesList/MoviesList';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
 
 function Movies(props) {
 
-  const [filmCards, setFilmCards] = useState([]);
+  const [filtredMovies, setFiltredMovies] = useState([]);
   const [searchWords, setSearchWords] = useState([]);
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
   }
 
-  function handleSearchMovie() {
-    moviesApi.getSearcheddCards()
-    .then((data) => {
+  function handleSearchMovies() {
+    moviesApi.getSearchedMovies()
+    .then((searchMovies) => {
       var films = []
-      data.map((card) => {
+      searchMovies.map((searchMovie) => {
           searchWords.map((word) => {
-              if (card.nameRU.toUpperCase().includes(word.toUpperCase())) {
-                  films.push(card);
+              if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase())) {
+                  films.push(searchMovie);
               }
           })
       })
-      setFilmCards(films)
+      setFiltredMovies(films)
     })
     .catch(err => {
       console.log(err);
@@ -36,8 +36,8 @@ function Movies(props) {
   return (
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
-      <SearchForm onSearchMovie={handleSearchMovie} onSetSearchWords={handleSetSearchWords} />
-      <MoviesCardList savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} cards={filmCards} saved={false} />
+      <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} />
+      <MoviesList savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>
   )

@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import './MoviesCard.css';
+import React from 'react';
+import './MovieCard.css';
 
-function MoviesCard(props) {
-    const isLiked = props.savedMovies.some(movie => movie.movieId === props.card.id);
+function MovieCard(props) {
+    const isLiked = props.savedMovies.some(movie => movie.movieId === props.movieCard.id);
 
     var savedMoviedId = ' '
     props.savedMovies.forEach(function(item) {
-        if (item.movieId === props.card.id) {
+        if (item.movieId === props.movieCard.id) {
           savedMoviedId = item._id
         }
     });
@@ -17,7 +17,7 @@ function MoviesCard(props) {
 
     function handleLikeClick() {
         if (!isLiked) {
-            props.handleLike(props.card)
+            props.handleLike(props.movieCard)
           }
           else {        
             props.handleDislike(savedMoviedId)
@@ -26,10 +26,10 @@ function MoviesCard(props) {
 
     return (
         <div className="card">
-            <img className="card__image" alt={props.card.name} src={`https://api.nomoreparties.co${props.card.image.url}`}/>
+            <img className="card__image" alt={props.movieCard.name} src={`https://api.nomoreparties.co${props.movieCard.image.url}`}/>
             <div className="card__info">
                 <div className="card__info-row">
-                    <h2 className="card__title">{props.card.nameRU}</h2>
+                    <h2 className="card__title">{props.movieCard.nameRU}</h2>
                     {props.saved
                     ?
                     <button className="card__dislike-button" type="button"></button>
@@ -37,10 +37,10 @@ function MoviesCard(props) {
                     <button className={cardLikeButtonClassName} type="button" onClick={handleLikeClick}></button>
                     }
                 </div>
-                <p className="card__duration">{props.card.duration}</p>
+                <p className="card__duration">{props.movieCard.duration}</p>
             </div>
         </div>  
     );
   }
   
-  export default MoviesCard;
+  export default MovieCard;

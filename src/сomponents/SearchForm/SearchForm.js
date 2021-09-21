@@ -15,7 +15,7 @@ function SearchForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.onSearchMovie();
+        props.onSearchMovies();
     }
 
     return (

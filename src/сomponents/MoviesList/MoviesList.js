@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import './MoviesList.css';
+import MovieCard from '../MovieCard/MovieCard';
 
-function MoviesCardList(props) {
-    const finalCards = props.cards;
+function MoviesList(props) {
+    const filtredMovies = props.movies;
 
-    const [cardsCount, setCardsCount] = useState({
+    const [moviesCardsCount, setMoviesCardsCount] = useState({
         itemsToShow: 0,
         itemsToAdd: 0
     });
@@ -21,9 +21,9 @@ function MoviesCardList(props) {
     }
 
     const handleClick = () => {
-        setCardsCount({
-            itemsToShow: cardsCount.itemsToShow + cardsCount.itemsToAdd,
-            itemsToAdd: cardsCount.itemsToAdd
+        setMoviesCardsCount({
+            itemsToShow: moviesCardsCount.itemsToShow + moviesCardsCount.itemsToAdd,
+            itemsToAdd: moviesCardsCount.itemsToAdd
         });
     }
 
@@ -38,17 +38,17 @@ function MoviesCardList(props) {
         const width = $html.clientWidth;
 
         if (width >= 1280) {
-            setCardsCount({ 
+            setMoviesCardsCount({ 
                 itemsToShow: 12,
                 itemsToAdd: 3
             });
         } else if (width >= 768) {
-            setCardsCount({ 
+            setMoviesCardsCount({ 
                 itemsToShow: 8,
                 itemsToAdd: 2
             });
         } else {
-            setCardsCount({ 
+            setMoviesCardsCount({ 
                 itemsToShow: 5,
                 itemsToAdd: 2
             });
@@ -58,9 +58,9 @@ function MoviesCardList(props) {
     return (
         <section className="card-list">
             <div className="card-list__container">
-                {finalCards.slice(0, (cardsCount.itemsToShow)).map((card) => {
+                {filtredMovies.slice(0, (moviesCardsCount.itemsToShow)).map((movieCard) => {
                 return(
-                    <MoviesCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={card.id} card={card} saved={props.saved} />
+                    <MovieCard handleLike={props.handleLike} handleDislike={props.handleDislike} savedMovies={props.savedMovies} key={movieCard.id} movieCard={movieCard} saved={props.saved} />
                 )})}
             </div>
             <button className="card-list__button" onClick={handleClick}>Ещё</button>
@@ -68,4 +68,4 @@ function MoviesCardList(props) {
     )
   }
   
-  export default MoviesCardList;
+  export default MoviesList;
