@@ -30,7 +30,7 @@ function MovieCard(props) {
 
     return (
         <div className="card">
-            <img className="card__image" alt={props.movieCard.name} src={props.movieCard.image}/>
+            <a href={props.movieCard.trailer} className="card__image-link" target="_blank"><img className="card__image" alt={props.movieCard.name} src={props.movieCard.image} /></a>
             <div className="card__info">
                 <div className="card__info-row">
                     <h2 className="card__title">{props.movieCard.nameRU}</h2>

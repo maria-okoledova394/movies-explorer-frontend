@@ -12,6 +12,11 @@
     height: 203px;
 }
 
+.card__image-link{
+    display: block;
+    width: 100%;
+}
+
 .card__info {
     position: relative;
     width: 332px;
