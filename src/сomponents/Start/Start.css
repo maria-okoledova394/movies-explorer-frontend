@@ -85,6 +85,11 @@
     cursor: pointer;
 }
 
+.start__button:disabled {
+    opacity: 0.3;
+    cursor: auto;
+}
+
 .start__input-error {
     font-size: 10px;
     color: #EE3465;
