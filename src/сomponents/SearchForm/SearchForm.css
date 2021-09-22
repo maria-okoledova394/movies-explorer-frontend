@@ -36,6 +36,20 @@
     outline: 1px solid rgba(139,139,139);
 }
 
+.searchform__input-error {
+    font-size: 10px;
+    color: #EE3465;
+    margin-top: 6px;
+}
+
+.searchform__input-error_visible {
+    opacity: 1;
+}
+
+.searchform__input-error_notvisible {
+    opacity: 0;
+}
+
 .searchform__button {
     border: none;
     background: url('../../images/search-icon.svg'), #4285F4;
