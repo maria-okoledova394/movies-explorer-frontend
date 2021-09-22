@@ -64,6 +64,7 @@ function Movies(props) {
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
       {isLoad ? <Preloader /> : <></>}
+      {(filtredMovies.length === 0 && showButton && !isLoad) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}
       <MoviesList showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>
