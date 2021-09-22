@@ -96,6 +96,11 @@
     cursor: pointer;
 }
 
+.profile__button:disabled {
+    opacity: 0.3;
+    cursor: auto;
+}
+
 .profile__button_edit {
     color: white;
     margin-top: 220px;
