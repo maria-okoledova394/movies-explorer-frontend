@@ -7,6 +7,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
@@ -141,22 +142,24 @@ function App() {
   }
 
   return (
-    <div className="page">
-      <Switch>
-        <Route path="/" exact>
-          <Main />
-        </Route>
-        <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
-        <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
-        <Route path="/signup">
-          <Register onSubmit={onRegister} />
-        </Route>
-        <Route path="/signin">
-          <Login onSubmit={onLogin} />
-        </Route>
-        <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
-      </Switch>
-    </div>
+    <CurrentUserContext.Provider value={userData}>
+      <div className="page">
+        <Switch>
+          <Route path="/" exact>
+            <Main />
+          </Route>
+          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
+          <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
+          <Route path="/signup">
+            <Register onSubmit={onRegister} />
+          </Route>
+          <Route path="/signin">
+            <Login onSubmit={onLogin} />
+          </Route>
+          <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
+        </Switch>
+      </div>
+    </CurrentUserContext.Provider>
   )
 }
 

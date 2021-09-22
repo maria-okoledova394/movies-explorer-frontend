@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import './Profile.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
+    const currentUser = React.useContext(CurrentUserContext);
     const [nameInput, setNameInput] = useState({
-        value: ''
+        value: currentUser.name
     });
-
     const [emailInput, setEmailInput] = useState({
-        value: ''
+        value: currentUser.email
     });
-
     const [error, setError] = useState({
         name: false,
         email: false
@@ -42,13 +42,19 @@ function Profile(props) {
         <>
             <Header loggedIn={true} onSignOut={props.onSignOut} />
             <section className="profile">
-                <h1 className="profile__title">Привет, Мария!</h1>
+                <h1 className="profile__title">Привет, {currentUser.name}!</h1>
                 <form className="profile__form" noValidate>
-                    <input id="name-input" placeholder="Имя" name="name" className="profile__input" value={nameInput.value} onChange={handleNameChange} required />
-                    <span className={errorNameClassName}>Что-то пошло не так...</span>
+                    <div className="profile__input-container">
+                        <input id="name-input" name="name" className="profile__input" value={nameInput.value} onChange={handleNameChange} required />
+                        <label className="profile__label">Имя</label>
+                        <span className={errorNameClassName}>Что-то пошло не так...</span>
+                    </div>                                        
                     <hr className="profile__line"></hr>
-                    <input id="email-input" name="email" placeholder="E-mail" className="profile__input" value={emailInput.value} onChange={handleEmailChange} required />
-                    <span className={errorEmailClassName}>Что-то пошло не так...</span>
+                    <div className="profile__input-container">
+                        <input id="email-input" name="email" className="profile__input" value={emailInput.value} onChange={handleEmailChange} required />
+                        <label className="profile__label">E-mail</label>
+                        <span className={errorEmailClassName}>Что-то пошло не так...</span>
+                    </div>
                     <button type="submit" className="profile__button profile__button_edit">Редактировать</button>
                 </form>
                 <button className="profile__button profile__button_exit" onClick={props.onSignOut}><Link to="/" className="profile__link">Выйти из аккаунта</Link></button>
@@ -56,5 +62,5 @@ function Profile(props) {
         </>
     )
   }
-  
+  // placeholder="Имя"
   export default Profile;

@@ -27,7 +27,12 @@
     width: 100%;
 }
 
+.profile__input-container {
+    position: relative;
+}
+
 .profile__input {
+    position: relative;
     margin-top: 17px;
     padding: 0;
     margin-bottom: 0;
@@ -37,8 +42,21 @@
     width: 100%;
     border: none;
     outline: none;
-    background-color: #202020;
+    background: transparent;
     text-align: right;
+    height: 14px;
+}
+
+.profile__label {
+    position: absolute;
+    top: 17px;
+    left: 0;
+    color: white;
+    font-size: 11px;
+    font-weight: 400;
+    width: 70px;
+    text-align: left;
+    display:inline-block;
 }
 
 .profile__input:hover {
