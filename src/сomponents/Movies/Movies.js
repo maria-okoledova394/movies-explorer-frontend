@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesList from '../MoviesList/MoviesList';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader';
 import moviesApi from '../../utils/MoviesApi';
 
 function Movies(props) {
@@ -12,6 +13,7 @@ function Movies(props) {
   const [searchWords, setSearchWords] = useState([]);
   const [isCheckbox, setIsCheckbox] = useState({ checked: false });
   const [showButton, setShowButton] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
@@ -23,6 +25,7 @@ function Movies(props) {
 
 
   function handleSearchMovies() {
+    setIsLoad(true)
     moviesApi.getSearchedMovies()
     .then((searchMovies) => {
       var films = []
@@ -48,6 +51,9 @@ function Movies(props) {
       setFiltredMovies(films)
       setShowButton(true)
     })
+    .finally(() => {
+      setIsLoad(false)
+    })
     .catch(err => {
       console.log(err);
     })
@@ -57,6 +63,7 @@ function Movies(props) {
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
+      {isLoad ? <Preloader /> : <></>}
       <MoviesList showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>

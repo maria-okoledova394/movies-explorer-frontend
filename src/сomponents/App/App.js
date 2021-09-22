@@ -7,7 +7,6 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import '../../vendor/fonts/fonts.css';

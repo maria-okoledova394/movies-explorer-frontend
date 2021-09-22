@@ -47,7 +47,7 @@ function SavedMovies(props) {
     <section className="movies">
       <Header loggedIn={true} onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
-      <MoviesList showButton={true} movies={savedFilteredMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />
+      <MoviesList showButton={false} movies={savedFilteredMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />
       <Footer />
     </section>
   )
