@@ -28,6 +28,8 @@ function Profile(props) {
         email: true
     });
 
+    const [isDataSuccessfullyChanged, setIsDataSuccessfullyChanged] = useState(false)
+
     useEffect(() => {
         if (!firstTimeRender.current) {
             setDisabled(!(validity.name && validity.email && (hasFieldChanged.name || hasFieldChanged.email)))
@@ -73,6 +75,7 @@ function Profile(props) {
                 name: nameInput.value,
                 email: emailInput.value
             })
+            setIsDataSuccessfullyChanged(true)
         }
     }
 
@@ -90,22 +93,23 @@ function Profile(props) {
                 <h1 className="profile__title">Привет, {currentUser.name}!</h1>
                 <form className="profile__form" noValidate onSubmit={handleUpdate}>
                     <div className="profile__input-container">
-                        <input id="name-input" name="name" className="profile__input" value={nameInput.value} onChange={handleNameChange} required  minLength="2" pattern="[A-Za-zА-Яа-яЁё\s\-]{2,}" />
+                        <input id="name-input" name="name" className="profile__input" value={nameInput.value} onChange={handleNameChange} required minLength="2" pattern="[A-Za-zА-Яа-яЁё\s\-]{2,}" />
                         <label className="profile__label">Имя</label>
                         <span className={errorNameClassName}>Что-то пошло не так...</span>
-                    </div>                                        
+                    </div>
                     <hr className="profile__line"></hr>
                     <div className="profile__input-container">
                         <input id="email-input" name="email" className="profile__input" value={emailInput.value} onChange={handleEmailChange} required type="email" />
                         <label className="profile__label">E-mail</label>
                         <span className={errorEmailClassName}>Что-то пошло не так...</span>
                     </div>
+                    {isDataSuccessfullyChanged ? <p className="profile__success-message" >Данные изменены!</p> : <></>}
                     <button type="submit" className="profile__button profile__button_edit" disabled={isButtonDisabled}>Редактировать</button>
-                </form>
+                </form>                
                 <button className="profile__button profile__button_exit" onClick={props.onSignOut}><Link to="/" className="profile__link">Выйти из аккаунта</Link></button>
             </section>
         </>
     )
   }
-  // placeholder="Имя"
+
   export default Profile;
