@@ -141,6 +141,16 @@ function App() {
     })
   }
 
+  function onUpdateUserData(data) {
+    mainApi.changeProfileInfo(data)
+    .then (data => {
+      setUserData(data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value={userData}>
       <div className="page">
@@ -156,7 +166,7 @@ function App() {
           <Route path="/signin">
             <Login onSubmit={onLogin} />
           </Route>
-          <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} />
+          <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
         </Switch>
       </div>
     </CurrentUserContext.Provider>

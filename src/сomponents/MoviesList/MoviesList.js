@@ -26,29 +26,43 @@ function MoviesList(props) {
     }
 
     useEffect(() => {
-        window.addEventListener("resize", handleResize);
+        let isMounted = true;
+
+        if (!isMounted ) {
+            window.addEventListener("resize", handleResize);
+        }
+
+        return () => {
+            isMounted = false
+        };
+        
     }, []);
 
     useEffect(() => {
+        let isMounted = true;
         const $html = document.documentElement;
         const width = $html.clientWidth;
 
-        if (width >= 1280) {
-            setMoviesCardsCount({ 
-                itemsToShow: 12,
-                itemsToAdd: 3
-            });
-        } else if (width >= 768) {
-            setMoviesCardsCount({ 
-                itemsToShow: 8,
-                itemsToAdd: 2
-            });
-        } else {
-            setMoviesCardsCount({ 
-                itemsToShow: 5,
-                itemsToAdd: 2
-            });
-        }
+            if (width >= 1280) {
+                if (isMounted) {setMoviesCardsCount({ 
+                    itemsToShow: 12,
+                    itemsToAdd: 3
+                });
+            }} else if (width >= 768) {
+                if (isMounted) {setMoviesCardsCount({ 
+                    itemsToShow: 8,
+                    itemsToAdd: 2
+                });
+            }} else {
+                if (isMounted) {setMoviesCardsCount({ 
+                    itemsToShow: 5,
+                    itemsToAdd: 2
+                });
+            }}
+
+        return () => {
+            isMounted = false
+        };
     }, [width.width]);
 
     return (

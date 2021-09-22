@@ -31,6 +31,14 @@ function Profile(props) {
         e.target.validity.valid ? setError({ ...error, email: false }) : setError({ ...error, email:true })
     }
 
+    function handleUodate(e) {
+        e.preventDefault();
+        props.onUpdateUserData({
+            name: nameInput.value,
+            email: emailInput.value
+        })
+    }
+
     const errorNameClassName = (
         `profile__input-error ${error.name ? 'profile__input-error_visible' : 'profile__input-error_notvisible'}`
     );
@@ -43,7 +51,7 @@ function Profile(props) {
             <Header loggedIn={true} onSignOut={props.onSignOut} />
             <section className="profile">
                 <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-                <form className="profile__form" noValidate>
+                <form className="profile__form" noValidate onSubmit={handleUodate}>
                     <div className="profile__input-container">
                         <input id="name-input" name="name" className="profile__input" value={nameInput.value} onChange={handleNameChange} required />
                         <label className="profile__label">Имя</label>

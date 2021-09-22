@@ -35,7 +35,7 @@ function SavedMovies(props) {
                     nameRU: savedMovie.nameRU,
                     nameEN: savedMovie.nameEN,
                     thumbnail: savedMovie.thumbnail,
-                    movieId: savedMovie.id,
+                    movieId: savedMovie.movieId,
                   });
               }
           })
