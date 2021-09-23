@@ -19,8 +19,10 @@ function App() {
   const [userData, setUserData] = useState({
     name: ' ',
     email: ' '
-  });
-  const [isMistake, setIsMistake] = useState(false);
+  });  
+
+  const [loginMistakeMessage, setLoginMistakeMessage] = useState("");
+  const [registerMistakeMessage, setRegisterMistakeMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -42,12 +44,12 @@ function App() {
       console.log(err);
     })
 
-    mainApi.getSavedMovies()
+    /*mainApi.getSavedMovies()
     .then((res) => {
       if (res){
         setSavedMovies(res.movies)
       }
-    })
+    })*/
     .catch(err => {
       console.log(err);
     })
@@ -101,27 +103,38 @@ function App() {
             email: res.email
           })
           setLoggedIn(true)
-        }
+          setLoginMistakeMessage("")
+        }        
       })
     })
     .then(()=> {
+      mainApi.getSavedMovies()
+      .then((res) => {
+        if (res){
+          setSavedMovies(res.movies)
+        }
+      })
       history.push('/movies')
     })
-    .catch(handleError)
+    .catch((error) => {
+      handleError(error)
+      setLoginMistakeMessage("Ошибка авторизации")
+      console.log('че')
+    })
   }
 
   function onRegister({ name, email, password }) {
     mainApi.register(name, email, password)
       .then((res) => {
-        setIsMistake(false)
-        return(res);
+        setRegisterMistakeMessage("")
+        return(res);        
       })
       .then(() => {
         onLogin({ email, password })
       })
       .catch((error) => {
         handleError(error)
-        setIsMistake(true)
+        setRegisterMistakeMessage("Ошибка регистрации")
       })
   }
 
@@ -137,7 +150,6 @@ function App() {
     })
     .catch((error) => {
       handleError(error)
-      setIsMistake(true)
     })
   }
 
@@ -161,10 +173,10 @@ function App() {
           <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
           <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
           <Route path="/signup">
-            <Register onSubmit={onRegister} />
+            <Register onSubmit={onRegister} mistakeMessage={registerMistakeMessage} />
           </Route>
           <Route path="/signin">
-            <Login onSubmit={onLogin} />
+            <Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
           </Route>
           <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
         </Switch>

@@ -4,7 +4,7 @@ import Start from '../Start/Start';
 function Register(props) {
 
     return (
-        <Start register={true} onSubmit={props.onSubmit} />
+        <Start register={true} onSubmit={props.onSubmit} mistakeMessage={props.mistakeMessage} />
     )
 }
   

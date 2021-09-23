@@ -39,7 +39,7 @@ function Start(props) {
     }, [validity]);
 
     useEffect(() => { 
-        firstTimeRender.current = false 
+        firstTimeRender.current = false
       }, [])
 
     function handleChange(e) {
@@ -109,6 +109,7 @@ function Start(props) {
                 <label className="start__placeholder">Пароль</label>
                 <input id="password-input-start" name="password" type="password" className="start__input" value={userData.password} onChange={handleChange} required minLength="2" />
                 <span className={errorPasswordClassName}>Введите пароль длиной более двух символов</span>
+                {props.mistakeMessage === "" ? <></> : <p className="start__error-message">{props.mistakeMessage}</p>}
                 <button type="submit" className="start__button" disabled={disabled}>{props.register ? "Зарегистрироваться": "Войти"}</button>
             </form>
             <p className="start__login-caprion">{props.register ? "Уже зарегистрированы?": "Ещё не зарегистрированы?"} <Link to={props.register ? "/signin": "/signup"} className="start__login-link">{props.register ? "Войти": "Регстрация"}</Link></p>
