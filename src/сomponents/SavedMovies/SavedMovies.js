@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -10,6 +10,10 @@ function SavedMovies(props) {
   const [searchWords, setSearchWords] = useState([]);
   const [savedFilteredMovies, setSavedFilteredMovies] = useState(props.savedMovies);
   const [isCheckbox, setIsCheckbox] = useState({ checked: false });
+
+  useEffect(() => {
+    setSavedFilteredMovies(props.savedMovies);
+  }, [props.savedMovies]);
 
   function handleChangeCheckbox(checked) {
     setIsCheckbox({ checked });

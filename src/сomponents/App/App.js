@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -8,22 +9,23 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import '../../vendor/fonts/fonts.css';
 
 function App() {
   const history = useHistory();
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [userData, setUserData] = useState({
     name: ' ',
     email: ' '
   });  
-
   const [loginMistakeMessage, setLoginMistakeMessage] = useState("");
   const [registerMistakeMessage, setRegisterMistakeMessage] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+
+  function handleError (err) {
+    console.error(err)
+  }
 
   useEffect(() => {
 
@@ -34,31 +36,32 @@ function App() {
           name: res.name,
           email: res.email
         })
-        setLoggedIn(true)
+        setIsLoggedIn(true)
       }
     })
     .then(()=> {
+      mainApi.getSavedMovies()
+      .then((res) => {
+        if (res){
+          setSavedMovies(res.movies)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
       history.push('/movies')
     })
-    .catch(err => {
-      console.log(err);
-    })
-
-    /*mainApi.getSavedMovies()
-    .then((res) => {
-      if (res){
-        setSavedMovies(res.movies)
-      }
-    })*/
-    .catch(err => {
-      console.log(err);
+    .catch((err) => {
+      handleError(err)
     })
 
   }, []);
 
-  function handleError (error) {
-    console.error(error)
-  }
+  /*useEffect(() => {
+
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+
+  }, [savedMovies]);*/
 
   function handleLike (movie) {
     mainApi.addToSaved({
@@ -77,18 +80,18 @@ function App() {
     .then (newSavedMovie => {
       setSavedMovies([newSavedMovie, ...savedMovies]);
     })
-    .catch(err => {
-    console.log(err);
+    .catch((err) => {
+      handleError(err)
     })
   }
 
   function handleDislike (savedMoviedId) {
     mainApi.removeFromSaved(savedMoviedId)
-    .then (removedMovie => {
+    .then (() => {
       setSavedMovies((state) => state.filter((c) => c._id !== savedMoviedId));
     })
-    .catch(err => {
-      console.log(err);
+    .catch((err) => {
+      handleError(err)
     })
   }
 
@@ -102,7 +105,7 @@ function App() {
             name: res.name,
             email: res.email
           })
-          setLoggedIn(true)
+          setIsLoggedIn(true)
           setLoginMistakeMessage("")
         }        
       })
@@ -116,8 +119,8 @@ function App() {
       })
       history.push('/movies')
     })
-    .catch((error) => {
-      handleError(error)
+    .catch((err) => {
+      handleError(err)
       setLoginMistakeMessage("Ошибка авторизации")
       console.log('че')
     })
@@ -132,8 +135,8 @@ function App() {
       .then(() => {
         onLogin({ email, password })
       })
-      .catch((error) => {
-        handleError(error)
+      .catch((err) => {
+        handleError(err)
         setRegisterMistakeMessage("Ошибка регистрации")
       })
   }
@@ -145,11 +148,13 @@ function App() {
         name: ' ',
         email: ' '
       })
-      setLoggedIn(false)
+      setIsLoggedIn(false)
+      localStorage.removeItem("filtredMovies");
+      // localStorage.removeItem("savedMovies");
       return(res)
     })
-    .catch((error) => {
-      handleError(error)
+    .catch((err) => {
+      handleError(err)
     })
   }
 
@@ -158,8 +163,8 @@ function App() {
     .then (data => {
       setUserData(data);
     })
-    .catch(err => {
-      console.log(err);
+    .catch((err) => {
+      handleError(err)
     })
   }
 
@@ -170,15 +175,15 @@ function App() {
           <Route path="/" exact>
             <Main />
           </Route>
-          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={loggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
-          <ProtectedRoute path="/saved-movies" loggedIn={loggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
+          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={isLoggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
+          <ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
           <Route path="/signup">
             <Register onSubmit={onRegister} mistakeMessage={registerMistakeMessage} />
           </Route>
           <Route path="/signin">
             <Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
           </Route>
-          <ProtectedRoute path="/profile" loggedIn={loggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
+          <ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
         </Switch>
       </div>
     </CurrentUserContext.Provider>
