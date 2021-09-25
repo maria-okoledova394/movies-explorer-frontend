@@ -57,12 +57,6 @@ function App() {
 
   }, []);
 
-  /*useEffect(() => {
-
-    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-
-  }, [savedMovies]);*/
-
   function handleLike (movie) {
     mainApi.addToSaved({
         country: movie.country,
@@ -150,7 +144,9 @@ function App() {
       })
       setIsLoggedIn(false)
       localStorage.removeItem("filtredMovies");
-      // localStorage.removeItem("savedMovies");
+      localStorage.removeItem("isCheckbox");
+      localStorage.removeItem("inputData");
+      localStorage.removeItem("searchWords");
       return(res)
     })
     .catch((err) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -12,8 +12,10 @@ function Movies(props) {
   const [searchWords, setSearchWords] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
   const [isCheckbox, setIsCheckbox] = useState({ checked: false });
+  const [clickOnCheckbox, setClickOnCheckbox] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
+  const firstSearch = useRef(true);
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
@@ -21,11 +23,26 @@ function Movies(props) {
 
   useEffect(() => {
 
+    if (!firstSearch.current) {
+      handleSearchMovies()
+    }    
+
+  }, [clickOnCheckbox]);
+
+  useEffect(() => {
+    firstSearch.current = false
     if (JSON.parse(localStorage.getItem('filtredMovies'))) {
       setFiltredMovies(JSON.parse(localStorage.getItem('filtredMovies')))
     }
+    if (JSON.parse(localStorage.getItem('isCheckbox'))) {
+      setIsCheckbox(JSON.parse(localStorage.getItem('isCheckbox')))
+    }
+    if (JSON.parse(localStorage.getItem('searchWords'))) {
+      setSearchWords(JSON.parse(localStorage.getItem('searchWords')))
+    }
 
   }, []);
+  
 
   useEffect(() => {
 
@@ -33,35 +50,40 @@ function Movies(props) {
 
   }, [filtredMovies]);
 
+  function filterMovies(movies) {
+    var films = []
+    movies.map((searchMovie) => {
+        searchWords.map((word) => {
+            if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? searchMovie.duration <= 40 : searchMovie.duration > 0)) {
+              films.push({
+                  country: searchMovie.country,
+                  director: searchMovie.director,
+                  duration: searchMovie.duration,
+                  year: searchMovie.year,
+                  description: searchMovie.description,
+                  image: `https://api.nomoreparties.co${searchMovie.image.url}`,
+                  trailer: searchMovie.trailerLink,
+                  nameRU: searchMovie.nameRU,
+                  nameEN: searchMovie.nameEN,
+                  thumbnail: `https://api.nomoreparties.co${searchMovie.image.formats.thumbnail.url}`,
+                  movieId: searchMovie.id,
+                });
+            }
+        })
+    })
+    setFiltredMovies(films)
+  }
+
   function handleSearchMovies() {
     setIsLoad(true)
     moviesApi.getSearchedMovies()
     .then((searchMovies) => {
-      var films = []
-      searchMovies.map((searchMovie) => {
-          searchWords.map((word) => {
-              if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? searchMovie.duration <= 40 : searchMovie.duration > 0)) {
-                films.push({
-                    country: searchMovie.country,
-                    director: searchMovie.director,
-                    duration: searchMovie.duration,
-                    year: searchMovie.year,
-                    description: searchMovie.description,
-                    image: `https://api.nomoreparties.co${searchMovie.image.url}`,
-                    trailer: searchMovie.trailerLink,
-                    nameRU: searchMovie.nameRU,
-                    nameEN: searchMovie.nameEN,
-                    thumbnail: `https://api.nomoreparties.co${searchMovie.image.formats.thumbnail.url}`,
-                    movieId: searchMovie.id,
-                  });
-              }
-          })
-      })
-      setFiltredMovies(films)
+      filterMovies(searchMovies)
       setShowButton(true)
     })
     .finally(() => {
       setIsLoad(false)
+      localStorage.setItem('searchWords', JSON.stringify(searchWords));
     })
     .catch(err => {
       console.log(err);
@@ -69,9 +91,10 @@ function Movies(props) {
     })
   }
   
-  function handleChangeCheckbox(checked) {    
+  function handleChangeCheckbox(checked) {
+    setClickOnCheckbox(!clickOnCheckbox)
     setIsCheckbox({ checked });
-    // handleSearchMovies()
+    localStorage.setItem('isCheckbox', JSON.stringify({ checked }));
   }
 
   return (

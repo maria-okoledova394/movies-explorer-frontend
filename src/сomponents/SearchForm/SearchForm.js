@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
@@ -9,6 +9,14 @@ function SearchForm(props) {
 
     const [errorNameClassName, setErrorNameClassName] = useState('searchform__input-error searchform__input-error_notvisible');
 
+    useEffect(() => {
+    
+        if (JSON.parse(localStorage.getItem('inputData')) && props.saved !== true) {
+            setInputData(JSON.parse(localStorage.getItem('inputData')))
+        }
+    
+    }, []);
+
     function handleChange(e) {
         const data = e.target
         setInputData({ value: data.value })
@@ -17,6 +25,9 @@ function SearchForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        if (props.saved !== true) {
+            localStorage.setItem('inputData', JSON.stringify(inputData));
+        }
         if (inputData.value === '') {
             setErrorNameClassName(`searchform__input-error searchform__input-error_visible`)
         } else {
