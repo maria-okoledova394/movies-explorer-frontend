@@ -3,6 +3,7 @@ import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesList from '../MoviesList/MoviesList';
+import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function SavedMovies(props) {
@@ -33,7 +34,7 @@ function SavedMovies(props) {
   }
 
   function handleSearchMovies() {
-      var films = []
+      const films = []
       props.savedMovies.map((savedMovie) => {
           if (searchWords.length !== 0) {
             searchWords.map((word) => {

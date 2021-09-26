@@ -28,6 +28,14 @@ function MovieCard(props) {
         props.handleDislike(savedMoviedId)
     }
 
+    function timeConvert(duration) {
+        const hours = (duration / 60);
+        const rhours = Math.floor(hours);
+        const minutes = (hours - rhours) * 60;
+        const rminutes = Math.round(minutes);
+        return rhours + "ч " + rminutes + "м";
+    }
+
     return (
         <div className="card">
             <a href={props.movieCard.trailer} className="card__image-link" target="_blank"><img className="card__image" alt={props.movieCard.name} src={props.movieCard.image} /></a>
@@ -41,7 +49,7 @@ function MovieCard(props) {
                     <button className={cardLikeButtonClassName} type="button" onClick={handleLikeClick}></button>
                     }
                 </div>
-                <p className="card__duration">{props.movieCard.duration}</p>
+                <p className="card__duration">{timeConvert(props.movieCard.duration)}</p>
             </div>
         </div>  
     );

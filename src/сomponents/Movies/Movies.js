@@ -21,14 +21,6 @@ function Movies(props) {
     setSearchWords(words)
   }
 
-  /*useEffect(() => {
-
-    if (!firstSearch.current) {
-      handleSearchMovies()
-    }    
-
-  }, [clickOnCheckbox]);*/
-
   useEffect(() => {
 
     if (!firstSearch) {
@@ -62,7 +54,7 @@ function Movies(props) {
   }, [filtredMovies]);
 
   function filterMovies(movies) {
-    var films = []
+    const films = []
     movies.map((searchMovie) => {
         searchWords.map((word) => {
             if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? searchMovie.duration <= 40 : searchMovie.duration > 0)) {
