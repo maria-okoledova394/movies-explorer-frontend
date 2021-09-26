@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -15,24 +15,35 @@ function Movies(props) {
   const [clickOnCheckbox, setClickOnCheckbox] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
-  const firstSearch = useRef(true);
+  const [firstSearch, setFirstSearch] = useState(true);
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
 
     if (!firstSearch.current) {
       handleSearchMovies()
     }    
 
+  }, [clickOnCheckbox]);*/
+
+  useEffect(() => {
+
+    if (!firstSearch) {
+      handleSearchMovies()
+    }
+
   }, [clickOnCheckbox]);
 
   useEffect(() => {
-    firstSearch.current = false
+    // firstSearch.current = false
     if (JSON.parse(localStorage.getItem('filtredMovies'))) {
-      setFiltredMovies(JSON.parse(localStorage.getItem('filtredMovies')))
+      if (JSON.parse(localStorage.getItem('filtredMovies')).length > 0) {
+        setFiltredMovies(JSON.parse(localStorage.getItem('filtredMovies')))
+        setShowButton(true)
+      }
     }
     if (JSON.parse(localStorage.getItem('isCheckbox'))) {
       setIsCheckbox(JSON.parse(localStorage.getItem('isCheckbox')))
@@ -75,6 +86,7 @@ function Movies(props) {
   }
 
   function handleSearchMovies() {
+    setFirstSearch(false)
     setIsLoad(true)
     moviesApi.getSearchedMovies()
     .then((searchMovies) => {
@@ -92,6 +104,7 @@ function Movies(props) {
   }
   
   function handleChangeCheckbox(checked) {
+    setFirstSearch(false)
     setClickOnCheckbox(!clickOnCheckbox)
     setIsCheckbox({ checked });
     localStorage.setItem('isCheckbox', JSON.stringify({ checked }));
@@ -104,7 +117,7 @@ function Movies(props) {
       {isLoad ? <Preloader /> : <></>}
       {(filtredMovies.length === 0 && showButton && !isLoad) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}
       {(searchMoviesMistakeMessage === "") ? <></> : <h2 className="movies__notfound-title">{searchMoviesMistakeMessage}</h2>}
-      <MoviesList showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
+      <MoviesList isLoad={isLoad} showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>
   )

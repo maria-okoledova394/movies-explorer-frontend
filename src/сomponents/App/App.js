@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -7,6 +7,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './App.css';
@@ -27,7 +28,11 @@ function App() {
     console.error(err)
   }
 
+  let location = useLocation();
+
   useEffect(() => {
+    
+    const link =  location.pathname
 
     mainApi.getProfileInfo()
     .then((res) => {
@@ -49,7 +54,7 @@ function App() {
       .catch(err => {
         console.log(err);
       })
-      history.push('/movies')
+      history.push(link)
     })
     .catch((err) => {
       handleError(err)
@@ -180,6 +185,9 @@ function App() {
             <Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
           </Route>
           <ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
+          <Route path="*">
+            <NotFoundPage />
+          </Route>
         </Switch>
       </div>
     </CurrentUserContext.Provider>
