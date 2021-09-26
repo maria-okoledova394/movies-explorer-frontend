@@ -3,7 +3,6 @@ import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesList from '../MoviesList/MoviesList';
-import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
 function SavedMovies(props) {

@@ -88,7 +88,7 @@ function MoviesList(props) {
         return () => {
             isMounted = false
         };
-    }, [width.width, props.isLoad]);
+    }, [width.width, props.movies]);
 
     return (
         <section className="card-list">

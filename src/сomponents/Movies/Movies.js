@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -8,14 +8,14 @@ import Preloader from '../Preloader/Preloader';
 import moviesApi from '../../utils/MoviesApi';
 
 function Movies(props) {
-  const [searchMoviesMistakeMessage, setSearchMoviesMistakeMessage] = useState("");
-  const [searchWords, setSearchWords] = useState([]);
+  const [initialMovies, setInitialMovies] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
+  const [searchWords, setSearchWords] = useState([]);
   const [isCheckbox, setIsCheckbox] = useState({ checked: false });
   const [clickOnCheckbox, setClickOnCheckbox] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
   const [firstSearch, setFirstSearch] = useState(true);
+  const [searchMoviesMistakeMessage, setSearchMoviesMistakeMessage] = useState("");
 
   function handleSetSearchWords(words) {
     setSearchWords(words)
@@ -30,7 +30,10 @@ function Movies(props) {
   }, [clickOnCheckbox]);
 
   useEffect(() => {
-    // firstSearch.current = false
+    let cleanupFunction = false;
+    if (JSON.parse(localStorage.getItem('searchWords'))) {
+      setSearchWords(JSON.parse(localStorage.getItem('searchWords')))
+    }
     if (JSON.parse(localStorage.getItem('filtredMovies'))) {
       if (JSON.parse(localStorage.getItem('filtredMovies')).length > 0) {
         setFiltredMovies(JSON.parse(localStorage.getItem('filtredMovies')))
@@ -40,12 +43,38 @@ function Movies(props) {
     if (JSON.parse(localStorage.getItem('isCheckbox'))) {
       setIsCheckbox(JSON.parse(localStorage.getItem('isCheckbox')))
     }
-    if (JSON.parse(localStorage.getItem('searchWords'))) {
-      setSearchWords(JSON.parse(localStorage.getItem('searchWords')))
+    if (JSON.parse(localStorage.getItem('initialMovies')) > 0) {
+      setInitialMovies(JSON.parse(localStorage.getItem('initialMovies')))
+      filterMovies(JSON.parse(localStorage.getItem('initialMovies')))
+    } else {
+      moviesApi.getSearchedMovies()
+      .then((initialMoviesFromApi) => {
+        if(!cleanupFunction) {setInitialMovies(initialMoviesFromApi.map(
+          function changeStringNames( initialMovieFromApi ) {
+            return {
+              country: initialMovieFromApi.country,
+              director: initialMovieFromApi.director,
+              duration: initialMovieFromApi.duration,
+              year: initialMovieFromApi.year,
+              description: initialMovieFromApi.description,
+              image: `https://api.nomoreparties.co${initialMovieFromApi.image.url}`,
+              trailer: initialMovieFromApi.trailerLink,
+              nameRU: initialMovieFromApi.nameRU,
+              nameEN: initialMovieFromApi.nameEN,
+              thumbnail: `https://api.nomoreparties.co${initialMovieFromApi.image.formats.thumbnail.url}`,
+              movieId: initialMovieFromApi.id,
+            }
+          }
+        ))}
+      })
+      .catch(err => {
+        console.log(err);
+        setSearchMoviesMistakeMessage("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
+      })
     }
 
+    return () => cleanupFunction = true;
   }, []);
-  
 
   useEffect(() => {
 
@@ -53,46 +82,33 @@ function Movies(props) {
 
   }, [filtredMovies]);
 
-  function filterMovies(movies) {
+  function filterMovies(initialMovies) {
     const films = []
-    movies.map((searchMovie) => {
-        searchWords.map((word) => {
-            if (searchMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? searchMovie.duration <= 40 : searchMovie.duration > 0)) {
-              films.push({
-                  country: searchMovie.country,
-                  director: searchMovie.director,
-                  duration: searchMovie.duration,
-                  year: searchMovie.year,
-                  description: searchMovie.description,
-                  image: `https://api.nomoreparties.co${searchMovie.image.url}`,
-                  trailer: searchMovie.trailerLink,
-                  nameRU: searchMovie.nameRU,
-                  nameEN: searchMovie.nameEN,
-                  thumbnail: `https://api.nomoreparties.co${searchMovie.image.formats.thumbnail.url}`,
-                  movieId: searchMovie.id,
-                });
+    initialMovies.map((initialMovie) => {
+        searchWords.map((searchWord) => {
+            if (initialMovie.nameRU.toUpperCase().includes(searchWord.toUpperCase()) && (isCheckbox.checked? initialMovie.duration <= 40 : initialMovie.duration > 0)) {
+              films.push(initialMovie);
             }
         })
     })
-    setFiltredMovies(films)
+    setFiltredMovies(films)    
+    setShowButton(true)
+    localStorage.setItem('searchWords', JSON.stringify(searchWords));
   }
 
+  useEffect(() => {
+
+    if (!firstSearch) {      
+      localStorage.setItem('initialMovies', JSON.stringify(initialMovies));
+    }
+
+  }, [initialMovies]);
+
   function handleSearchMovies() {
-    setFirstSearch(false)
-    setIsLoad(true)
-    moviesApi.getSearchedMovies()
-    .then((searchMovies) => {
-      filterMovies(searchMovies)
-      setShowButton(true)
-    })
-    .finally(() => {
-      setIsLoad(false)
-      localStorage.setItem('searchWords', JSON.stringify(searchWords));
-    })
-    .catch(err => {
-      console.log(err);
-      setSearchMoviesMistakeMessage("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
-    })
+    document.querySelector('.preloader').classList.remove('preloader_status_notactive');
+    filterMovies(initialMovies)
+    setFirstSearch(false)    
+    document.querySelector('.preloader').classList.add('preloader_status_notactive');
   }
   
   function handleChangeCheckbox(checked) {
@@ -106,10 +122,10 @@ function Movies(props) {
     <section className="movies">
       <Header loggedIn={true}  onSignOut={props.onSignOut} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
-      {isLoad ? <Preloader /> : <></>}
-      {(filtredMovies.length === 0 && showButton && !isLoad) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}
+      <Preloader />
+      {(filtredMovies.length === 0 && showButton) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}
       {(searchMoviesMistakeMessage === "") ? <></> : <h2 className="movies__notfound-title">{searchMoviesMistakeMessage}</h2>}
-      <MoviesList isLoad={isLoad} showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
+      <MoviesList showButton={showButton} savedMovies={props.savedMovies} handleLike={props.handleLike} handleDislike={props.handleDislike} movies={filtredMovies} saved={false} />
       <Footer />
     </section>
   )
