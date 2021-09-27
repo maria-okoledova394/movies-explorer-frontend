@@ -78,7 +78,9 @@ function Movies(props) {
 
   useEffect(() => {
 
-    localStorage.setItem('filtredMovies', JSON.stringify(filtredMovies));
+    if (!firstSearch) {
+    localStorage.setItem('filtredMovies', JSON.stringify(filtredMovies))
+    }
 
   }, [filtredMovies]);
 

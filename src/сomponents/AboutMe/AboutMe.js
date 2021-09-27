@@ -16,8 +16,8 @@ function AboutMe() {
                     <p className="aboutme__text">Это не моя фотография
                     </p>
                     <ul className="aboutme__links">
-                        <li className="aboutme__link"><a className="aboutme__link" href="https://vk.com/okoledova" target="_blank">VK</a></li>
-                        <li className="aboutme__link"><a className="aboutme__link" href="https://github.com/maria-okoledova394" target="_blank">Github</a></li>
+                        <li className="aboutme__link"><a className="aboutme__link" href="https://vk.com/okoledova" target="_blank" rel="noreferrer">VK</a></li>
+                        <li className="aboutme__link"><a className="aboutme__link" href="https://github.com/maria-okoledova394" target="_blank" rel="noreferrer">Github</a></li>
                     </ul>
                 </div>
                 <img className="aboutme__photo" alt="мое фото" src={myPhoto} />

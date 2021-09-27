@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
@@ -23,6 +23,7 @@ function App() {
   });  
   const [loginMistakeMessage, setLoginMistakeMessage] = useState("");
   const [registerMistakeMessage, setRegisterMistakeMessage] = useState("");
+  const [firstLikeClick, setFirstLikeClick] = useState(true);
 
   function handleError (err) {
     console.error(err)
@@ -42,18 +43,23 @@ function App() {
           email: res.email
         })
         setIsLoggedIn(true)
+
+        if (JSON.parse(localStorage.getItem('savedMovies'))) {
+          setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')))
+        } else {
+            mainApi.getSavedMovies()
+            .then((res) => {
+              if (res){
+                setSavedMovies(res.movies)
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+        }
       }
     })
     .then(()=> {
-      mainApi.getSavedMovies()
-      .then((res) => {
-        if (res){
-          setSavedMovies(res.movies)
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
       history.push(link)
     })
     .catch((err) => {
@@ -62,7 +68,16 @@ function App() {
 
   }, []);
 
+  useEffect(() => {
+
+    if (!firstLikeClick) {      
+      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+    }
+
+  }, [savedMovies]);
+
   function handleLike (movie) {
+    setFirstLikeClick(false)
     mainApi.addToSaved({
         country: movie.country,
         director: movie.director,
@@ -85,6 +100,7 @@ function App() {
   }
 
   function handleDislike (savedMoviedId) {
+    setFirstLikeClick(false)
     mainApi.removeFromSaved(savedMoviedId)
     .then (() => {
       setSavedMovies((state) => state.filter((c) => c._id !== savedMoviedId));
@@ -152,6 +168,7 @@ function App() {
       localStorage.removeItem("isCheckbox");
       localStorage.removeItem("inputData");
       localStorage.removeItem("searchWords");
+      localStorage.removeItem("initialMovies");
       return(res)
     })
     .catch((err) => {

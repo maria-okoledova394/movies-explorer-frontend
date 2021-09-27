@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import Header from '../Header/Header';
 import Promo from '../Promo/Promo';
 import NavTab from '../NavTab/NavTab';
