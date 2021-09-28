@@ -13,6 +13,6 @@ function NavTab() {
             </ul>
         </div>
     )
-  }
+}
   
-  export default NavTab;
+export default NavTab;

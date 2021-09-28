@@ -7,7 +7,7 @@ function MovieCard(props) {
     var savedMoviedId = ' '
     props.savedMovies.forEach(function(item) {
         if (item.movieId === props.movieCard.movieId) {
-          savedMoviedId = item._id
+            savedMoviedId = item._id
         }
     });
 
@@ -18,8 +18,7 @@ function MovieCard(props) {
     function handleLikeClick() {
         if (!isLiked) {
             props.handleLike(props.movieCard)
-          }
-          else {        
+        } else {        
             props.handleDislike(savedMoviedId)
         }
     }
@@ -53,6 +52,6 @@ function MovieCard(props) {
             </div>
         </div>  
     );
-  }
+}
   
-  export default MovieCard;
+export default MovieCard;

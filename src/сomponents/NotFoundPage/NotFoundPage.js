@@ -19,7 +19,7 @@ function NotFoundPage() {
             <h1 className="notFoundPage__title">404</h1>
             <p className="notFoundPage__subtitle">Страница не найдена</p>
             <button className="notFoundPage__buttun" onClick={goBack}>Назад</button>
-    </section>
+        </section>
     )
 }
 

@@ -22,6 +22,6 @@ function Techs() {
             </section>
         </div>
     )
-  }
+}
   
-  export default Techs;
+export default Techs;

@@ -12,6 +12,6 @@ function Header(props) {
             </header>
         </div>  
     );
-  }
+}
   
-  export default Header;
+export default Header;

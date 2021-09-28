@@ -25,6 +25,6 @@ function AboutMe() {
             <Portfolio />
         </section>
     )
-  }
+}
   
-  export default AboutMe;
+export default AboutMe;

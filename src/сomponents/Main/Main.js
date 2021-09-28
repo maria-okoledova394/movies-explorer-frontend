@@ -9,17 +9,17 @@ import Footer from '../Footer/Footer';
 
 function Main(props) {
 
-    return (
-      <div className="main">
-        <Header loggedIn={props.loggedIn} />
-        <Promo />
-        <NavTab />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-        <Footer />
-      </div>
-    )
-  }
+	return (
+		<div className="main">
+			<Header loggedIn={props.loggedIn} />
+			<Promo />
+			<NavTab />
+			<AboutProject />
+			<Techs />
+			<AboutMe />
+			<Footer />
+		</div>
+	)
+}
   
-  export default Main;
+export default Main;

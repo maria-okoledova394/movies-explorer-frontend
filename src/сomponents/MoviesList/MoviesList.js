@@ -15,7 +15,7 @@ function MoviesList(props) {
 
     const handleResize = () => {
         setWidth({
-        width: window.innerWidth,
+            width: window.innerWidth,
         });
     }
 
@@ -102,6 +102,6 @@ function MoviesList(props) {
             {(props.showButton && movies.length > 3 && (moviesCardsCount.itemsToShowMax > moviesCardsCount.itemsToShow) && (moviesCardsCount.itemsToShow < movies.length)) ? <button className="card-list__button" onClick={handleClick}>Ещё</button> : <></>}            
         </section>
     )
-  }
+}
   
-  export default MoviesList;
+export default MoviesList;

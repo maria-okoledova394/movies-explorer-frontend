@@ -27,193 +27,194 @@ function App() {
   const [isDataSuccessChanged, setIsDataSuccessChanged] = useState(false)
 
   function handleError (err) {
-    console.error(err)
-  }
+		console.error(err)
+	}
 
-  let location = useLocation();
+	let location = useLocation();
 
-  useEffect(() => {
-    
-    const link =  location.pathname
+	useEffect(() => {
 
-    mainApi.getProfileInfo()
-    .then((res) => {
-      if (res){
-        setUserData({
-          name: res.name,
-          email: res.email
-        })
-        setIsLoggedIn(true)
+		const link =  location.pathname
 
-        if (JSON.parse(localStorage.getItem('savedMovies'))) {
-          setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')))
-        } else {
-            mainApi.getSavedMovies()
-            .then((res) => {
-              if (res){
-                setSavedMovies(res.movies)
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
-        }
-      }
-    })
-    .then(()=> {
-      history.push(link)
-    })
-    .catch((err) => {
-      handleError(err)
-    })
+		mainApi.getProfileInfo()
+		.then((res) => {
+			if (res){
+			setUserData({
+				name: res.name,
+				email: res.email
+			})
+			setIsLoggedIn(true)
 
-  }, []);
+			if (JSON.parse(localStorage.getItem('savedMovies'))) {
+				setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')))
+			} else {
+				mainApi.getSavedMovies()
+				.then((res) => {
+					if (res){
+					setSavedMovies(res.movies)
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				})
+			}
+			}
+		})
+		.then(()=> {
+			history.push(link)
+		})
+		.catch((err) => {
+			handleError(err)
+		})
 
-  useEffect(() => {
+	}, []);
 
-    if (!firstLikeClick) {      
-      localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-    }
+	useEffect(() => {
 
-  }, [savedMovies]);
+		if (!firstLikeClick) {      
+			localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+		}
 
-  function handleLike (movie) {
-    setFirstLikeClick(false)
-    mainApi.addToSaved({
-        country: movie.country,
-        director: movie.director,
-        duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
-        image: movie.image,
-        trailer: movie.trailer,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
-        thumbnail: movie.thumbnail,
-        movieId: movie.movieId,
-    })
-    .then (newSavedMovie => {
-      setSavedMovies([newSavedMovie, ...savedMovies]);
-    })
-    .catch((err) => {
-      handleError(err)
-    })
-  }
+	}, [savedMovies]);
 
-  function handleDislike (savedMoviedId) {
-    setFirstLikeClick(false)
-    mainApi.removeFromSaved(savedMoviedId)
-    .then (() => {
-      setSavedMovies((state) => state.filter((c) => c._id !== savedMoviedId));
-    })
-    .catch((err) => {
-      handleError(err)
-    })
-  }
+	function handleLike (movie) {
+		setFirstLikeClick(false)
 
-  function onLogin({ email, password }) {
-    mainApi.authorize(email, password)
-    .then(() => {
-      return mainApi.getProfileInfo()
-      .then((res) => {
-        if (res){
-          setUserData({
-            name: res.name,
-            email: res.email
-          })
-          setIsLoggedIn(true)
-          setLoginMistakeMessage("")
-        }        
-      })
-    })
-    .then(()=> {
-      mainApi.getSavedMovies()
-      .then((res) => {
-        if (res){
-          setSavedMovies(res.movies)
-        }
-      })
-      history.push('/movies')
-    })
-    .catch((err) => {
-      handleError(err)
-      setLoginMistakeMessage("Ошибка авторизации")
-      console.log('че')
-    })
-  }
+		mainApi.addToSaved({
+			country: movie.country,
+			director: movie.director,
+			duration: movie.duration,
+			year: movie.year,
+			description: movie.description,
+			image: movie.image,
+			trailer: movie.trailer,
+			nameRU: movie.nameRU,
+			nameEN: movie.nameEN,
+			thumbnail: movie.thumbnail,
+			movieId: movie.movieId,
+		})
+		.then (newSavedMovie => {
+			setSavedMovies([newSavedMovie, ...savedMovies]);
+		})
+		.catch((err) => {
+			handleError(err)
+		})
+	}
 
-  function onRegister({ name, email, password }) {
-    mainApi.register(name, email, password)
-      .then((res) => {
-        setRegisterMistakeMessage("")
-        return(res);        
-      })
-      .then(() => {
-        onLogin({ email, password })
-      })
-      .catch((err) => {
-        handleError(err)
-        setRegisterMistakeMessage("Ошибка регистрации")
-      })
-  }
+	function handleDislike (savedMoviedId) {
+		setFirstLikeClick(false)
 
-  function onSignOut() {
-    mainApi.logout()
-    .then((res) => {
-      setUserData({
-        name: ' ',
-        email: ' '
-      })
-      setIsLoggedIn(false)
-      localStorage.removeItem("filtredMovies");
-      localStorage.removeItem("isCheckbox");
-      localStorage.removeItem("inputData");
-      localStorage.removeItem("searchWords");
-      localStorage.removeItem("initialMovies");
-      localStorage.removeItem("savedMovies");
-      return(res)
-    })
-    .catch((err) => {
-      handleError(err)
-    })
-  }
+		mainApi.removeFromSaved(savedMoviedId)
+		.then (() => {
+			setSavedMovies((state) => state.filter((c) => c._id !== savedMoviedId));
+		})
+		.catch((err) => {
+			handleError(err)
+		})
+	}
 
-  function onUpdateUserData(data) {
-    mainApi.changeProfileInfo(data)
-    .then (data => {
-      setUserData(data);
-      setIsDataSuccessChanged(true)
-    })
-    .catch((err) => {
-      handleError(err)
-      setIsDataSuccessChanged(false)
-    })
+	function onLogin({ email, password }) {
+		mainApi.authorize(email, password)
+		.then(() => {
+			return mainApi.getProfileInfo()
+			.then((res) => {
+			if (res){
+				setUserData({
+				name: res.name,
+				email: res.email
+				})
+				setIsLoggedIn(true)
+				setLoginMistakeMessage("")
+			}        
+			})
+		})
+		.then(()=> {
+			mainApi.getSavedMovies()
+			.then((res) => {
+			if (res){
+				setSavedMovies(res.movies)
+			}
+			})
+			history.push('/movies')
+		})
+		.catch((err) => {
+			handleError(err)
+			setLoginMistakeMessage("Ошибка авторизации")
+			console.log('че')
+		})
+	}
 
-  }
+	function onRegister({ name, email, password }) {
+		mainApi.register(name, email, password)
+			.then((res) => {
+			setRegisterMistakeMessage("")
+			return(res);        
+			})
+			.then(() => {
+			onLogin({ email, password })
+			})
+			.catch((err) => {
+			handleError(err)
+			setRegisterMistakeMessage("Ошибка регистрации")
+			})
+	}
 
-  return (
-    <CurrentUserContext.Provider value={userData}>
-      <div className="page">
-        <Switch>
-          <Route path="/" exact >
-            <Main loggedIn={isLoggedIn} />
-          </Route>
-          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={isLoggedIn} component={Movies} savedMovies={savedMovies} />
-          <ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} />
-          <Route path="/signup">
-            <Register onSubmit={onRegister} mistakeMessage={registerMistakeMessage} />
-          </Route>
-          <Route path="/signin">
-            <Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
-          </Route>
-          <ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} isDataSuccessChanged={isDataSuccessChanged} />
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </div>
-    </CurrentUserContext.Provider>
-  )
+	function onSignOut() {
+		mainApi.logout()
+		.then((res) => {
+			setUserData({
+			name: ' ',
+			email: ' '
+			})
+			setIsLoggedIn(false)
+			localStorage.removeItem("filtredMovies");
+			localStorage.removeItem("isCheckbox");
+			localStorage.removeItem("inputData");
+			localStorage.removeItem("searchWords");
+			localStorage.removeItem("initialMovies");
+			localStorage.removeItem("savedMovies");
+			return(res)
+		})
+		.catch((err) => {
+			handleError(err)
+		})
+	}
+
+	function onUpdateUserData(data) {
+		mainApi.changeProfileInfo(data)
+		.then (data => {
+			setUserData(data);
+			setIsDataSuccessChanged(true)
+		})
+		.catch((err) => {
+			handleError(err)
+			setIsDataSuccessChanged(false)
+		})
+	}
+
+	return (
+		<CurrentUserContext.Provider value={userData}>
+			<div className="page">
+			<Switch>
+				<Route path="/" exact >
+				<Main loggedIn={isLoggedIn} />
+				</Route>
+				<ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={isLoggedIn} component={Movies} savedMovies={savedMovies} />
+				<ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} />
+				<Route path="/signup">
+				<Register onSubmit={onRegister} mistakeMessage={registerMistakeMessage} />
+				</Route>
+				<Route path="/signin">
+				<Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
+				</Route>
+				<ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} isDataSuccessChanged={isDataSuccessChanged} />
+				<Route path="*">
+				<NotFoundPage />
+				</Route>
+			</Switch>
+			</div>
+		</CurrentUserContext.Provider>
+	)
 }
 
 export default App;

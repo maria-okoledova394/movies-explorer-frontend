@@ -1,11 +1,11 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 .page {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  background-color: #202020;
-  width: 100%;
-  min-height: 100vh;
-  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	background-color: #202020;
+	width: 100%;
+	min-height: 100vh;
+	font-family: 'Inter', 'Helvetica Neue', sans-serif;
 }

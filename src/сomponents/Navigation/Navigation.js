@@ -5,7 +5,6 @@ import accountIcon from '../../images/navigation-account-icon.svg';
 
 function Navigation(props) {
     const [links, setLinks] = useState(false);
-
     
     const linksClassName = (
         `navigation__links ${links ? 'navigation__links_status_active' : 'navigation__links_status_notactive'}`
@@ -50,6 +49,6 @@ function Navigation(props) {
             }
         </div>   
     );
-  }
+}
   
-  export default Navigation;
+export default Navigation;
