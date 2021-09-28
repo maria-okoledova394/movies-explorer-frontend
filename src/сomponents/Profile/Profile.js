@@ -28,7 +28,7 @@ function Profile(props) {
         email: true
     });
 
-    const [isDataSuccessfullyChanged, setIsDataSuccessfullyChanged] = useState(false)
+    const [isUpdateClick, setIsUpdateClick] = useState(false)
 
     useEffect(() => {
         if (!firstTimeRender.current) {
@@ -75,8 +75,8 @@ function Profile(props) {
                 name: nameInput.value,
                 email: emailInput.value
             })
-            setIsDataSuccessfullyChanged(true)
         }
+        setIsUpdateClick(true)
     }
 
     const errorNameClassName = (
@@ -103,7 +103,7 @@ function Profile(props) {
                         <label className="profile__label">E-mail</label>
                         <span className={errorEmailClassName}>Что-то пошло не так...</span>
                     </div>
-                    {isDataSuccessfullyChanged ? <p className="profile__success-message" >Данные изменены!</p> : <></>}
+                    {isUpdateClick ? <p className="profile__result-message">{props.isDataSuccessChanged ? "Данные изменены!" : "Данные не удалось изменить"}</p> : <></>}
                     <button type="submit" className="profile__button profile__button_edit" disabled={isButtonDisabled}>Редактировать</button>
                 </form>                
                 <button className="profile__button profile__button_exit" onClick={props.onSignOut}><Link to="/" className="profile__link">Выйти из аккаунта</Link></button>

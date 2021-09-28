@@ -35,6 +35,7 @@ function MoviesList(props) {
 
         return () => {
             isMounted = false
+            window.removeEventListener("resize", handleResize);
         };
         
     }, []);

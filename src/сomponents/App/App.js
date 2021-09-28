@@ -24,6 +24,7 @@ function App() {
   const [loginMistakeMessage, setLoginMistakeMessage] = useState("");
   const [registerMistakeMessage, setRegisterMistakeMessage] = useState("");
   const [firstLikeClick, setFirstLikeClick] = useState(true);
+  const [isDataSuccessChanged, setIsDataSuccessChanged] = useState(false)
 
   function handleError (err) {
     console.error(err)
@@ -169,6 +170,7 @@ function App() {
       localStorage.removeItem("inputData");
       localStorage.removeItem("searchWords");
       localStorage.removeItem("initialMovies");
+      localStorage.removeItem("savedMovies");
       return(res)
     })
     .catch((err) => {
@@ -180,10 +182,13 @@ function App() {
     mainApi.changeProfileInfo(data)
     .then (data => {
       setUserData(data);
+      setIsDataSuccessChanged(true)
     })
     .catch((err) => {
       handleError(err)
+      setIsDataSuccessChanged(false)
     })
+
   }
 
   return (
@@ -201,7 +206,7 @@ function App() {
           <Route path="/signin">
             <Login onSubmit={onLogin} mistakeMessage={loginMistakeMessage} />
           </Route>
-          <ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} />
+          <ProtectedRoute path="/profile" loggedIn={isLoggedIn} component={Profile} onSignOut={onSignOut} onUpdateUserData={onUpdateUserData} isDataSuccessChanged={isDataSuccessChanged} />
           <Route path="*">
             <NotFoundPage />
           </Route>
