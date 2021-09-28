@@ -190,11 +190,11 @@ function App() {
     <CurrentUserContext.Provider value={userData}>
       <div className="page">
         <Switch>
-          <Route path="/" exact>
-            <Main />
+          <Route path="/" exact >
+            <Main loggedIn={isLoggedIn} />
           </Route>
-          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={isLoggedIn} component={Movies} savedMovies={savedMovies} onSignOut={onSignOut} />
-          <ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} onSignOut={onSignOut} />
+          <ProtectedRoute path="/movies" handleLike={handleLike} handleDislike={handleDislike} loggedIn={isLoggedIn} component={Movies} savedMovies={savedMovies} />
+          <ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn} component={SavedMovies} handleDislike={handleDislike} savedMovies={savedMovies} />
           <Route path="/signup">
             <Register onSubmit={onRegister} mistakeMessage={registerMistakeMessage} />
           </Route>

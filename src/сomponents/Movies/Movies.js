@@ -123,7 +123,7 @@ function Movies(props) {
 
   return (
     <section className="movies">
-      <Header loggedIn={true}  onSignOut={props.onSignOut} />
+      <Header loggedIn={true} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} />
       <Preloader />
       {(filtredMovies.length === 0 && showButton) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}

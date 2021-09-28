@@ -6,11 +6,10 @@
     flex-direction: row;
     justify-content: space-between;
     width: 89%;
-    /* border-bottom: 1px solid rgba(84, 84, 84, 0.7); */
 }
 
 .header_notloggedin {
-    background-color: #073042;
+    background-color: transparent;
     width: 92%;
     padding-top: 18px;
     padding-bottom: 18px;
@@ -25,6 +24,7 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    position: absolute;
 }
 
 .header__container_notloggedin {

@@ -99,7 +99,7 @@
 
 .navigation__button {
     display: none;
-    background: url(../../images/navigation.svg), #202020;
+    background: url(../../images/navigation.svg), transparent;
     width: 44px;
     height: 44px;
     border: none;

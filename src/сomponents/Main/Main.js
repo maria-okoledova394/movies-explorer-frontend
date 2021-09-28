@@ -7,11 +7,11 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main(props) {
 
     return (
       <div className="main">
-        <Header loggedIn={false} />
+        <Header loggedIn={props.loggedIn} />
         <Promo />
         <NavTab />
         <AboutProject />

@@ -55,7 +55,7 @@ function SavedMovies(props) {
 
   return (
     <section className="movies">
-      <Header loggedIn={true} onSignOut={props.onSignOut} />
+      <Header loggedIn={true} />
       <SearchForm onSearchMovies={handleSearchMovies} onSetSearchWords={handleSetSearchWords} handleChangeCheckbox={handleChangeCheckbox} isCheckbox={isCheckbox} saved={true}/>
       {(savedFilteredMovies.length === 0) ? <h2 className="movies__notfound-title">Ничего не найдено</h2> : <></>}
       <MoviesList showButton={false} movies={savedFilteredMovies} savedMovies={props.savedMovies} handleDislike={props.handleDislike} saved={true} />

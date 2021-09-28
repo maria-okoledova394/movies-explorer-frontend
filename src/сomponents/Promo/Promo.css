@@ -8,11 +8,11 @@
     background-position: center;
     display: flex;
     justify-content: center;
-    /* background-size: cover; */
+    padding-top: 74px;
 }
 
 .promo__title {
-    margin-top: 184px;
+    margin-top: 154px;
     margin-bottom: 0;
     color: white;
     font-size: 50px;
