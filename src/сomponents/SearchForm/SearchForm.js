@@ -20,7 +20,7 @@ function SearchForm(props) {
     function handleChange(e) {
         const data = e.target
         setInputData({ value: data.value })
-        props.onSetSearchWords(data.value.split(' '))
+        props.onSetSearchWords(data.value.split(" ").filter(Boolean))
     }
 
     function handleSubmit(e) {

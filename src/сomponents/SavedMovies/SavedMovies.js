@@ -37,7 +37,7 @@ function SavedMovies(props) {
       props.savedMovies.map((savedMovie) => {
           if (searchWords.length !== 0) {
             searchWords.map((word) => {
-              if (savedMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? savedMovie.duration <= 40 : savedMovie.duration > 0)) {
+              if (savedMovie.nameRU.toUpperCase().includes(word.toUpperCase()) && (isCheckbox.checked? savedMovie.duration <= 40 : savedMovie.duration > 0)  && ( films.indexOf(savedMovie) === -1 )) {
                   films.push(savedMovie);
               }
           })

@@ -85,10 +85,10 @@ function Movies(props) {
   }, [filtredMovies]);
 
   function filterMovies(initialMovies) {
-    const films = []
+    var films = []
     initialMovies.map((initialMovie) => {
         searchWords.map((searchWord) => {
-            if (initialMovie.nameRU.toUpperCase().includes(searchWord.toUpperCase()) && (isCheckbox.checked? initialMovie.duration <= 40 : initialMovie.duration > 0)) {
+            if (initialMovie.nameRU.toUpperCase().includes(searchWord.toUpperCase()) && (isCheckbox.checked? initialMovie.duration <= 40 : initialMovie.duration > 0) && ( films.indexOf(initialMovie) === -1 )) {
               films.push(initialMovie);
             }
         })
@@ -96,6 +96,7 @@ function Movies(props) {
     setFiltredMovies(films)    
     setShowButton(true)
     localStorage.setItem('searchWords', JSON.stringify(searchWords));
+    films = []
   }
 
   useEffect(() => {
